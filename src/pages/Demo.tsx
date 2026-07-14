@@ -42,6 +42,31 @@ const tourSteps: { view: TourView; label: string; title: string; description: st
   },
 ]
 
+const systemFlow = [
+  ['Goal', '学习目标'],
+  ['Roadmap', '长期路径'],
+  ['Daily Guide', '当前执行稿'],
+  ['Session', '学习会话'],
+  ['Submission', '结果提交'],
+  ['Evaluation', '结构化评价'],
+  ['Knowledge', '知识沉淀'],
+  ['Rolling Plan', '下一轮计划'],
+]
+
+const architecturePrinciples = [
+  ['SQLite 是唯一事实源', '目标、计划、Session、提交和评价保存在本地数据库，应用重启后可以恢复到一致位置。'],
+  ['程序推进状态', 'AI 负责生成内容和建议，正式状态由应用校验并推进，模型不能直接修改学习进度。'],
+  ['Schema Guard', '所有结构化模型输出都经过 Zod 校验；失败可以重试，不会把非法结果写进业务状态。'],
+  ['Human-in-the-loop', '阶段确认和计划调整保留给用户决定，AI 提案确认后才会事务性应用。'],
+]
+
+const techStack = [
+  ['桌面端', 'Electron', 'React', 'TypeScript'],
+  ['数据层', 'SQLite', 'Drizzle ORM', 'Zod'],
+  ['AI 层', 'OpenAI-compatible API', 'DeepSeek'],
+  ['质量保障', 'Vitest', 'Playwright', 'Schema Tests'],
+]
+
 function ActivityRail({ active }: { active: 'overview' | 'study' | 'records' | 'settings' }) {
   return (
     <aside className="product-rail" aria-label="软件导航示意">
@@ -186,39 +211,76 @@ function Demo() {
 
   return (
     <div className="product-tour">
-      <header className="tour-hero">
-        <span>REAL PRODUCT FLOW / 真实产品流程</span>
-        <h1>一次完整学习，<br />在软件里如何发生。</h1>
-        <p>以下界面根据 Study Agent 桌面版的真实信息架构和业务流程重建。无需填写内容，向下滚动或点击步骤即可浏览。</p>
-      </header>
-
-      <nav className="tour-step-nav" aria-label="产品流程步骤">
-        {tourSteps.map((item, index) => (
-          <button type="button" className={index === activeIndex ? 'active' : ''} key={item.view} onClick={() => showStep(index)}>
-            <span>{String(index + 1).padStart(2, '0')}</span>{item.label.split(' · ')[1]}
-          </button>
-        ))}
-      </nav>
-
-      <section className="tour-stage">
-        <div className="tour-explanation">
-          <span>{step.label}</span>
-          <h2>{step.title}</h2>
-          <p>{step.description}</p>
-          <div className="tour-controls">
-            <button type="button" onClick={() => showStep(Math.max(0, activeIndex - 1))} disabled={activeIndex === 0}>← 上一步</button>
-            <small>{activeIndex + 1} / {tourSteps.length}</small>
-            <button type="button" onClick={() => showStep(Math.min(tourSteps.length - 1, activeIndex + 1))} disabled={activeIndex === tourSteps.length - 1}>下一步 →</button>
+      <header className="project-hero">
+        <div className="project-hero-label">PROJECT 01 / FLAGSHIP</div>
+        <div className="project-hero-grid">
+          <h1>Study<br /><em>Agent</em></h1>
+          <div>
+            <p className="project-hero-lead">把概率性的 LLM，包装成可靠、可恢复的个人学习运行时。</p>
+            <p>一个运行在 Windows 本地的 AI 学习系统。它将目标、计划、执行、提交、评价和复盘组织成长期学习闭环，而不是一次性的聊天对话。</p>
+            <dl><div><dt>角色</dt><dd>产品设计 / 全栈开发</dd></div><div><dt>平台</dt><dd>Windows Desktop</dd></div><div><dt>年份</dt><dd>2026</dd></div></dl>
           </div>
         </div>
-        <div className="tour-product-frame">
-          {step.view === 'intake' && <IntakeView />}
-          {step.view === 'overview' && <OverviewView />}
-          {step.view === 'study' && <StudyView />}
-          {step.view === 'submission' && <SubmissionView />}
-          {step.view === 'records' && <RecordsView />}
-          {step.view === 'next' && <NextView />}
+        <nav className="project-anchor-nav" aria-label="项目内容导航"><a href="#product-flow">产品流程</a><a href="#system-flow">业务数据流</a><a href="#architecture">技术架构</a></nav>
+      </header>
+
+      <section className="project-section product-flow-section" id="product-flow">
+        <header className="project-section-heading"><span>01 / PRODUCT FLOW</span><div><h2>一次完整学习，<br />在软件里如何发生。</h2><p>界面根据桌面版真实信息架构和业务状态重建。无需填写内容，点击步骤即可浏览。</p></div></header>
+        <nav className="tour-step-nav" aria-label="产品流程步骤">
+          {tourSteps.map((item, index) => (
+            <button type="button" className={index === activeIndex ? 'active' : ''} key={item.view} onClick={() => showStep(index)}>
+              <span>{String(index + 1).padStart(2, '0')}</span>{item.label.split(' · ')[1]}
+            </button>
+          ))}
+        </nav>
+        <div className="tour-stage">
+          <div className="tour-explanation">
+            <span>{step.label}</span>
+            <h2>{step.title}</h2>
+            <p>{step.description}</p>
+            <div className="tour-controls">
+              <button type="button" onClick={() => showStep(Math.max(0, activeIndex - 1))} disabled={activeIndex === 0}>← 上一步</button>
+              <small>{activeIndex + 1} / {tourSteps.length}</small>
+              <button type="button" onClick={() => showStep(Math.min(tourSteps.length - 1, activeIndex + 1))} disabled={activeIndex === tourSteps.length - 1}>下一步 →</button>
+            </div>
+          </div>
+          <div className="tour-product-frame">
+            {step.view === 'intake' && <IntakeView />}
+            {step.view === 'overview' && <OverviewView />}
+            {step.view === 'study' && <StudyView />}
+            {step.view === 'submission' && <SubmissionView />}
+            {step.view === 'records' && <RecordsView />}
+            {step.view === 'next' && <NextView />}
+          </div>
         </div>
+      </section>
+
+      <section className="project-section" id="system-flow">
+        <header className="project-section-heading"><span>02 / SYSTEM FLOW</span><div><h2>从目标到下一轮计划</h2><p>应用保存长期状态，模型只在明确边界内生成内容。每个结果都会成为下一次学习的上下文。</p></div></header>
+        <div className="system-flow-diagram">
+          {systemFlow.map(([label, description], index) => (
+            <article key={label}><span>{String(index + 1).padStart(2, '0')}</span><strong>{label}</strong><small>{description}</small>{index < systemFlow.length - 1 && <i>→</i>}</article>
+          ))}
+        </div>
+      </section>
+
+      <section className="project-section" id="architecture">
+        <header className="project-section-heading"><span>03 / ARCHITECTURE</span><div><h2>让 AI 能力服从可靠的应用状态</h2><p>核心不是多调用一次模型，而是确保任何一次失败、暂停或重启之后，用户仍能回到正确位置。</p></div></header>
+        <div className="architecture-principles">
+          {architecturePrinciples.map(([title, description], index) => <article key={title}><span>0{index + 1}</span><h3>{title}</h3><p>{description}</p></article>)}
+        </div>
+        <div className="architecture-layers">
+          <div className="layer renderer"><span>Renderer</span><strong>概览 / 学习 / 记录 / 设置</strong><small>只消费共享业务状态</small></div>
+          <i>↓</i>
+          <div className="layer runtime"><span>Application Runtime</span><strong>状态机 · 校验 · 恢复 · 上下文构建</strong><small>程序推进正式状态</small></div>
+          <i>↓</i>
+          <div className="layer split"><div><span>SQLite</span><strong>Durable Source of Truth</strong></div><div><span>LLM</span><strong>内容与建议生成</strong></div></div>
+        </div>
+      </section>
+
+      <section className="project-section tech-stack-section">
+        <header className="project-section-heading"><span>04 / STACK</span><div><h2>技术栈与产品边界</h2><p>桌面端拥有完整本地能力；当前网站只负责展示，不接入真实模型和用户数据。</p></div></header>
+        <div className="project-tech-grid">{techStack.map(([category, ...items]) => <article key={category}><span>{category}</span>{items.map((item) => <strong key={item}>{item}</strong>)}</article>)}</div>
       </section>
 
       <section className="tour-footnote">

@@ -3,9 +3,9 @@ import './layout.css'
 
 const navItems = [
   { path: '/', label: '作品' },
-  { path: '/demo', label: 'Demo' },
-  { path: '/architecture', label: '架构' },
-  { path: '/desktop-app', label: '桌面版' },
+  { path: '/demo', label: 'Study Agent' },
+  { path: '/demo2', label: 'Project 02' },
+  { path: '/demo3', label: 'Project 03' },
   { path: '/about', label: '关于我' },
 ]
 

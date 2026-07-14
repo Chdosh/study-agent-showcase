@@ -27,12 +27,14 @@ const capabilities = [
 const futureProjects = [
   {
     number: '02',
+    path: '/demo2',
     title: 'Project 02',
     type: '项目位置已预留',
     description: '用于你的第二个项目：后续补充项目名称、核心价值、技术栈和详情入口即可。',
   },
   {
     number: '03',
+    path: '/demo3',
     title: 'Project 03',
     type: '项目位置已预留',
     description: '用于你的第三个项目：可以放产品截图、过程说明，并复用 Study Agent 的案例结构。',
@@ -73,11 +75,7 @@ function Home() {
             <h3>Study Agent</h3>
             <p className="project-lead">把概率性的 LLM，包装成可靠的个人学习运行时。</p>
             <p className="project-description">一个本地优先的 Windows 桌面学习系统。它通过结构化状态、Schema Guard 与 Human-in-the-loop 机制，让目标、计划、执行、评估和复盘形成可持续的学习闭环。</p>
-            <div className="project-links">
-              <Link to="/demo">体验在线 Demo <span>↗</span></Link>
-              <Link to="/architecture">阅读技术架构 <span>↗</span></Link>
-              <Link to="/desktop-app">查看桌面应用 <span>↗</span></Link>
-            </div>
+            <div className="project-links"><Link to="/demo">查看完整项目 <span>↗</span></Link></div>
           </div>
           <div className="project-visual" aria-label="Study Agent 界面概念图">
             <div className="visual-window">
@@ -104,7 +102,7 @@ function Home() {
 
         <div className="future-project-grid">
           {futureProjects.map((project) => (
-            <article className="future-project" key={project.number}>
+            <Link className="future-project" key={project.number} to={project.path}>
               <div className="future-project-meta">
                 <span>{project.number} / FUTURE WORK</span>
                 <em>准备中</em>
@@ -115,7 +113,7 @@ function Home() {
                 <p>{project.description}</p>
               </div>
               <span className="future-project-arrow" aria-hidden="true">↗</span>
-            </article>
+            </Link>
           ))}
         </div>
       </section>

@@ -2,9 +2,8 @@ import { Routes, Route } from 'react-router-dom'
 import Layout from './components/Layout'
 import Home from './pages/Home'
 import Demo from './pages/Demo'
-import Architecture from './pages/Architecture'
-import DesktopApp from './pages/DesktopApp'
 import About from './pages/About'
+import ProjectPlaceholder from './pages/ProjectPlaceholder'
 
 function App() {
   return (
@@ -12,8 +11,8 @@ function App() {
       <Route path="/" element={<Layout />}>
         <Route index element={<Home />} />
         <Route path="demo" element={<Demo />} />
-        <Route path="architecture" element={<Architecture />} />
-        <Route path="desktop-app" element={<DesktopApp />} />
+        <Route path="demo2" element={<ProjectPlaceholder number="02" />} />
+        <Route path="demo3" element={<ProjectPlaceholder number="03" />} />
         <Route path="about" element={<About />} />
       </Route>
     </Routes>
