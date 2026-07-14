@@ -8,6 +8,7 @@
 
 - 将站点定位从单一 Study Agent 项目页调整为“项目展示为主、个人身份为辅”的综合个人作品集
 - 首页新增个人定位、能力介绍、工作方式与作品索引，Study Agent 继续作为占比最大的旗舰案例
+- 首页预留 Project 02 与 Project 03 两个扩展位，后续可直接替换名称、简介、技术栈和链接
 - 保留全部现有路由：`/`、`/demo`、`/architecture`、`/desktop-app`、`/about`
 - 将原 8 步表单 Mock Demo 替换为无需输入的 6 步真实产品导览
 - 重构全局导航、页脚、色彩、字体层级、间距与响应式布局
@@ -26,7 +27,7 @@
 
 - `npm run lint`：通过，零错误
 - `npm run build`：通过，46 modules transformed
-- 构建产物：186.96 kB JS、29.04 kB CSS
+- 构建产物：187.30 kB JS、29.46 kB CSS
 
 ## 尚未完成
 

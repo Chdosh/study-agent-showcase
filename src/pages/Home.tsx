@@ -24,6 +24,21 @@ const capabilities = [
   },
 ]
 
+const futureProjects = [
+  {
+    number: '02',
+    title: 'Project 02',
+    type: '项目位置已预留',
+    description: '用于你的第二个项目：后续补充项目名称、核心价值、技术栈和详情入口即可。',
+  },
+  {
+    number: '03',
+    title: 'Project 03',
+    type: '项目位置已预留',
+    description: '用于你的第三个项目：可以放产品截图、过程说明，并复用 Study Agent 的案例结构。',
+  },
+]
+
 function Home() {
   return (
     <div className="portfolio-home">
@@ -87,13 +102,21 @@ function Home() {
           </div>
         </article>
 
-        <div className="project-index">
-          <div className="project-index-copy">
-            <span>02 / NEXT</span>
-            <h3>更多作品正在整理</h3>
-            <p>这里会持续收录 AI 工具、效率软件和实验性产品。当前先把 Study Agent 的设计与工程过程完整讲清楚。</p>
-          </div>
-          <Link to="/about" className="round-link" aria-label="了解更多">↗</Link>
+        <div className="future-project-grid">
+          {futureProjects.map((project) => (
+            <article className="future-project" key={project.number}>
+              <div className="future-project-meta">
+                <span>{project.number} / FUTURE WORK</span>
+                <em>准备中</em>
+              </div>
+              <div>
+                <small>{project.type}</small>
+                <h3>{project.title}</h3>
+                <p>{project.description}</p>
+              </div>
+              <span className="future-project-arrow" aria-hidden="true">↗</span>
+            </article>
+          ))}
         </div>
       </section>
 
@@ -121,7 +144,7 @@ function Home() {
 
       <section className="site-note">
         <div><span className="status-dot" /><strong>关于这个在线版本</strong></div>
-        <p>这是静态作品展示，不接入真实模型、不收集用户数据。在线 Demo 使用 Mock 数据与 localStorage；完整产品运行在本地 Electron 环境。</p>
+        <p>这是静态作品展示，不接入真实模型、不收集用户数据。在线 Demo 只展示虚构案例；完整产品运行在本地 Electron 环境。</p>
       </section>
     </div>
   )

@@ -10,7 +10,7 @@
 .hero-actions { margin-top: 30px; display: flex; align-items: center; gap: 26px; flex-wrap: wrap; }
 .work-section, .capability-section { display: flex; flex-direction: column; gap: 44px; }
 .section-heading { display: grid; grid-template-columns: 1fr 3fr; padding-top: 22px; border-top: 1px solid var(--color-text); }
-.section-heading > span, .project-index-copy > span { color: var(--color-accent); font: 600 .68rem var(--font-mono); letter-spacing: .12em; }
+.section-heading > span, .future-project-meta > span { color: var(--color-accent); font: 600 .68rem var(--font-mono); letter-spacing: .12em; }
 .section-heading h2 { font: 400 clamp(2rem, 4vw, 3.6rem)/1.04 var(--font-display); letter-spacing: -.04em; }
 .featured-project { min-height: 590px; display: grid; grid-template-columns: 5fr 7fr; background: var(--color-text); color: #fff; overflow: hidden; }
 .project-copy { padding: clamp(32px, 5vw, 64px); display: flex; flex-direction: column; align-items: flex-start; }
@@ -44,11 +44,15 @@
 .progress-row { margin-top: 28px; display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 12px; color: #686d72; font-size: .62rem; }
 .progress-row div { height: 5px; background: #dedbd2; border-radius: 5px; overflow: hidden; }
 .progress-row div i { width: 68%; height: 100%; display: block; background: var(--color-success); }
-.project-index { min-height: 190px; padding: 34px 0; display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 1px solid var(--color-border); }
-.project-index-copy h3 { margin: 14px 0 10px; font: 400 2rem var(--font-display); }
-.project-index-copy p { max-width: 650px; color: var(--color-text-secondary); }
-.round-link { width: 54px; height: 54px; display: grid; place-items: center; flex: 0 0 auto; border: 1px solid var(--color-text); border-radius: 50%; transition: background .18s, color .18s; }
-.round-link:hover { color: #fff; background: var(--color-text); }
+.future-project-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--color-border); border: 1px solid var(--color-border); }
+.future-project { min-height: 300px; padding: 30px; display: flex; flex-direction: column; position: relative; background: var(--color-bg-secondary); }
+.future-project-meta { display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+.future-project-meta em { padding: 4px 9px; color: var(--color-text-muted); border: 1px solid var(--color-border); border-radius: 999px; font: normal .65rem var(--font-mono); }
+.future-project > div:nth-child(2) { margin-top: auto; max-width: 420px; }
+.future-project small { color: var(--color-text-muted); font: .68rem var(--font-mono); }
+.future-project h3 { margin: 10px 0 12px; font: 400 2.1rem var(--font-display); }
+.future-project p { max-width: 88%; color: var(--color-text-secondary); font-size: .86rem; }
+.future-project-arrow { position: absolute; right: 28px; bottom: 28px; color: var(--color-text-muted); font-size: 1.1rem; }
 .capability-list { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; }
 .capability-list article { min-height: 220px; padding: 22px 0; display: flex; flex-direction: column; border-top: 1px solid var(--color-border); }
 .capability-list article > span { color: var(--color-accent); font: .68rem var(--font-mono); }
@@ -68,6 +72,7 @@
   .project-copy { min-height: 520px; }
   .project-visual { padding: 48px 0 48px 42px; }
   .capability-list { grid-template-columns: repeat(2, 1fr); }
+  .future-project-grid { grid-template-columns: 1fr; }
   .about-strip { grid-template-columns: 1fr 3fr; }
   .about-strip .text-link { grid-column: 2; justify-self: start; }
 }
@@ -83,8 +88,7 @@
   .visual-window { min-width: 520px; transform: none; }
   .capability-list { grid-template-columns: 1fr; gap: 0; }
   .capability-list article { min-height: 180px; }
-  .project-index, .site-note { align-items: flex-start; }
-  .project-index { gap: 24px; }
+  .site-note { align-items: flex-start; }
   .about-strip, .site-note { grid-template-columns: 1fr; gap: 24px; }
   .about-strip .text-link { grid-column: 1; }
 }
