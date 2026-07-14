@@ -1,7 +1,7 @@
-.product-tour { display: flex; flex-direction: column; gap: 76px; padding-top: 72px; }
-.project-hero { padding-bottom: 54px; border-bottom: 1px solid var(--color-text); }
+.product-tour { display: flex; flex-direction: column; gap: 56px; padding-top: 64px; }
+.project-hero { padding-bottom: 42px; border-bottom: 1px solid var(--color-text); }
 .project-hero-label, .project-section-heading > span { color: var(--color-accent); font: 600 .68rem var(--font-mono); letter-spacing: .13em; }
-.project-hero-grid { margin-top: 40px; display: grid; grid-template-columns: 6fr 4fr; gap: 8%; align-items: end; }
+.project-hero-grid { margin-top: 36px; display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: end; }
 .project-hero h1 { font: 400 clamp(4.5rem, 10vw, 9rem)/.78 var(--font-display); letter-spacing: -.075em; }
 .project-hero h1 em { color: var(--color-accent); font-weight: 400; }
 .project-hero-grid > div > p { color: var(--color-text-secondary); }
@@ -10,12 +10,12 @@
 .project-hero dl div { padding-top: 10px; border-top: 1px solid var(--color-border); }
 .project-hero dt { color: var(--color-text-muted); font: .62rem var(--font-mono); text-transform: uppercase; }
 .project-hero dd { margin-top: 5px; font-size: .78rem; }
-.project-anchor-nav { margin-top: 58px; display: flex; gap: 8px; flex-wrap: wrap; }
+.project-anchor-nav { margin-top: 40px; display: flex; gap: 8px; flex-wrap: wrap; }
 .project-anchor-nav a { min-height: 42px; padding: 0 15px; display: inline-flex; align-items: center; border: 1px solid var(--color-border); color: var(--color-text-secondary); font-size: .78rem; }
 .project-anchor-nav a:hover { color: #fff; border-color: var(--color-text); background: var(--color-text); }
-.project-section { display: flex; flex-direction: column; gap: 42px; scroll-margin-top: 100px; }
-.project-section-heading { display: grid; grid-template-columns: 1fr 3fr; gap: 30px; padding-top: 22px; border-top: 1px solid var(--color-text); }
-.project-section-heading h2 { max-width: 760px; font: 400 clamp(2.3rem, 5vw, 4.4rem)/1 var(--font-display); letter-spacing: -.05em; }
+.project-section { display: flex; flex-direction: column; gap: 34px; scroll-margin-top: 100px; }
+.project-section-heading { display: grid; grid-template-columns: 1fr; gap: 18px; padding-top: 22px; border-top: 1px solid var(--color-text); }
+.project-section-heading h2 { max-width: 900px; font: 400 clamp(2.3rem, 5vw, 4.4rem)/1 var(--font-display); letter-spacing: -.05em; }
 .project-section-heading p { max-width: 650px; margin-top: 18px; color: var(--color-text-secondary); }
 .tour-hero { max-width: 880px; }
 .tour-hero > span, .tour-explanation > span { color: var(--color-accent); font: 600 .68rem var(--font-mono); letter-spacing: .13em; }
