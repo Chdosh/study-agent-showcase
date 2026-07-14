@@ -1,488 +1,230 @@
-import { useState, useEffect, useCallback } from 'react'
-import type { DemoState, DemoStep, InterviewAnswer, Submission } from '../demo/types'
-import {
-  loadDemoState,
-  saveDemoState,
-  resetDemoState,
-  saveCurrentStep,
-  saveGoal,
-  saveInterviewAnswers,
-  saveSubmission,
-} from '../demo/demoRepository'
-import {
-  MOCK_GOAL,
-  MOCK_INTERVIEW_ANSWERS,
-  MOCK_ROADMAP,
-  MOCK_DAILY_TASKS,
-  MOCK_EVALUATIONS,
-  MOCK_KNOWLEDGE_CARDS,
-  MOCK_NEXT_PLAN,
-  DEMO_STEPS,
-} from '../demo/mockData'
+import { useState, type ReactNode } from 'react'
 import './demo.css'
 
-const STEP_LABELS: Record<DemoStep, string> = {
-  goal_input: '目标输入',
-  interview: '目标澄清',
-  roadmap: '学习路线图',
-  daily_task: '今日任务',
-  submission: '提交总结',
-  evaluation: 'AI 评估',
-  knowledge_cards: '知识卡片',
-  next_plan: '下一轮计划',
+type TourView = 'intake' | 'overview' | 'study' | 'submission' | 'records' | 'next'
+
+const tourSteps: { view: TourView; label: string; title: string; description: string }[] = [
+  {
+    view: 'intake',
+    label: '01 · 建立目标',
+    title: '先理解目标和现实约束',
+    description: '用户说清楚想学什么、现有基础和时间限制，AI 将对话整理成可执行的学习目标。',
+  },
+  {
+    view: 'overview',
+    label: '02 · 生成路径',
+    title: '把长期目标拆成当前重点',
+    description: '系统生成 Roadmap、近期安排和当前主任务，概览页只保留此刻最重要的下一步。',
+  },
+  {
+    view: 'study',
+    label: '03 · 开始学习',
+    title: '围绕一个真实任务执行',
+    description: '进入学习页后，用户按 Action 完成任务，可以暂停、恢复，并在当前上下文中向 AI 提问。',
+  },
+  {
+    view: 'submission',
+    label: '04 · 提交与评价',
+    title: '用学习结果结束任务',
+    description: '完成行动步骤后提交结果。提交先保存在本地，再由 AI 给出评价、优势和修改建议。',
+  },
+  {
+    view: 'records',
+    label: '05 · 沉淀记录',
+    title: '把过程变成可追溯证据',
+    description: 'Session、提交、评价和知识沉淀统一进入记录页，过去发生了什么一目了然。',
+  },
+  {
+    view: 'next',
+    label: '06 · 调整下一轮',
+    title: '根据真实表现继续规划',
+    description: '系统结合薄弱点和完成情况提出下一批任务；重要调整由用户确认后才会进入正式计划。',
+  },
+]
+
+function ActivityRail({ active }: { active: 'overview' | 'study' | 'records' | 'settings' }) {
+  return (
+    <aside className="product-rail" aria-label="软件导航示意">
+      {[
+        ['overview', '概'],
+        ['study', '学'],
+        ['records', '记'],
+        ['settings', '设'],
+      ].map(([key, label]) => (
+        <span key={key} className={active === key ? 'is-active' : ''}>{label}</span>
+      ))}
+      <i />
+    </aside>
+  )
+}
+
+function IntakeView() {
+  return (
+    <ProductWindow active="overview">
+      <div className="intake-view">
+        <div className="product-eyebrow">创建学习目标</div>
+        <h3>从一次真实对话开始</h3>
+        <div className="chat-thread">
+          <div className="chat-message assistant">你准备学习什么？可以直接说目标、期限、基础和每天可投入时间。</div>
+          <div className="chat-message user">我想在一个月内学会用 Python 自动处理销售数据。会 Excel，但没有编程基础，每天大约能学 90 分钟。</div>
+          <div className="chat-message assistant compact">明白了。我会以“独立完成销售数据清洗与分析”为结果，先补齐 Python 和 Pandas 基础，再进入完整项目。</div>
+        </div>
+        <div className="goal-summary">
+          <span>目标理解摘要</span>
+          <strong>30 天掌握 Python 销售数据分析</strong>
+          <small>零编程基础 · 每日 90 分钟 · 结果导向</small>
+        </div>
+      </div>
+    </ProductWindow>
+  )
+}
+
+function OverviewView() {
+  return (
+    <ProductWindow active="overview">
+      <div className="overview-view">
+        <header><span className="product-eyebrow">当前学习目标</span><h3>用 Python 独立完成销售数据分析</h3><p>第 8 天 · 当前处于数据处理核心阶段</p></header>
+        <section className="stage-card"><div><span>当前阶段</span><strong>Pandas 数据处理</strong><small>掌握 DataFrame 的筛选、清洗与聚合</small></div><em>进行中</em></section>
+        <section className="path-strip">
+          {['Python 基础', 'Pandas 处理', '数据清洗', '可视化', '综合项目'].map((item, index) => (
+            <div className={index < 1 ? 'done' : index === 1 ? 'active' : ''} key={item}><i>{index + 1}</i><span>{item}</span></div>
+          ))}
+        </section>
+        <section className="focus-task"><div><span className="product-eyebrow">当前主任务</span><h4>清洗一份真实销售数据</h4><p>处理缺失值、重复记录和错误的数据类型，并保留验证结果。</p></div><button type="button">进入学习</button></section>
+      </div>
+    </ProductWindow>
+  )
+}
+
+function StudyView() {
+  return (
+    <ProductWindow active="study">
+      <div className="study-view">
+        <div className="session-bar"><span><i /> 学习中</span><strong>00:24:18</strong><button type="button">暂停</button></div>
+        <header><span className="product-eyebrow">当前任务 · 1 / 3</span><h3>清洗一份真实销售数据</h3><p>完成每个行动步骤，过程中可以随时向 AI 导师提问。</p></header>
+        <div className="action-list">
+          <article className="complete"><i>✓</i><div><strong>读取并检查数据结构</strong><small>确认列名、数据类型和缺失情况</small></div><span>已完成</span></article>
+          <article className="current"><i>2</i><div><strong>处理缺失值与重复记录</strong><small>选择合适策略并记录处理前后数量</small></div><span>执行中</span></article>
+          <article><i>3</i><div><strong>验证清洗结果</strong><small>检查类型、范围和唯一性约束</small></div><span>未开始</span></article>
+        </div>
+        <div className="teacher-note"><b>AI 导师</b><p>如果不确定应该删除还是填补缺失值，先判断这一列在业务中的含义，再比较两种处理对结果的影响。</p></div>
+      </div>
+    </ProductWindow>
+  )
+}
+
+function SubmissionView() {
+  return (
+    <ProductWindow active="study">
+      <div className="submission-view">
+        <header><span className="product-eyebrow">任务评价</span><h3>清洗一份真实销售数据</h3><p>提交已经保存在本地，评价结果不会覆盖原始学习证据。</p></header>
+        <div className="submission-proof"><span>用户提交</span><p>完成了 1,248 条销售记录的清洗，补全了地区字段，删除 18 条重复记录，并将日期列统一转换为 datetime。验证脚本全部通过。</p><small>已保存 · 今天 20:46</small></div>
+        <div className="evaluation-result">
+          <div><span className="result-mark">✓</span><div><strong>评价通过</strong><small>当前任务已完成，可以进入下一任务</small></div></div>
+          <p>处理步骤完整，能够解释缺失值策略，并提供了清洗前后的数量对比。下一步建议补充异常值检测。</p>
+          <ul><li>保留了可复现的验证证据</li><li>正确区分删除与填补场景</li><li>需要加强异常值识别</li></ul>
+        </div>
+      </div>
+    </ProductWindow>
+  )
+}
+
+function RecordsView() {
+  return (
+    <ProductWindow active="records">
+      <div className="records-view">
+        <header><h3>记录</h3><p>查看学习经历、结果证据和后续调整。</p></header>
+        <div className="record-tabs"><span className="active">时间线</span><span>知识沉淀</span><span>计划版本</span></div>
+        <div className="record-layout">
+          <div className="record-list">
+            <article><span>评价</span><strong>销售数据清洗任务通过</strong><small>今天 20:47</small></article>
+            <article><span>提交</span><strong>清洗结果与验证证据</strong><small>今天 20:46</small></article>
+            <article><span>Session</span><strong>完成 3 个行动步骤</strong><small>今天 20:42</small></article>
+            <article><span>提问</span><strong>如何选择缺失值处理策略</strong><small>今天 20:18</small></article>
+          </div>
+          <div className="record-detail"><span>评价</span><h4>销售数据清洗任务通过</h4><p>学习结果已经评价并写入当前进度。系统从本次提交中识别出一个持续关注项。</p><div><b>知识沉淀</b><small>异常值检测方法仍需加强 · 首次记录</small></div></div>
+        </div>
+      </div>
+    </ProductWindow>
+  )
+}
+
+function NextView() {
+  return (
+    <ProductWindow active="records">
+      <div className="next-view">
+        <header><span className="product-eyebrow">复盘与计划调整</span><h3>下一批学习任务</h3><p>根据最近的提交、评价和知识沉淀生成，确认后才会进入正式计划。</p></header>
+        <div className="review-summary"><strong>本轮总结</strong><p>已经能够独立完成基础数据清洗。下一轮将继续补足异常值检测，并开始学习分组聚合。</p></div>
+        <div className="proposal-list">
+          <article><i>01</i><div><strong>异常值检测与处理</strong><small>IQR、业务阈值与处理策略</small></div><em>新增重点</em></article>
+          <article><i>02</i><div><strong>销售数据分组聚合</strong><small>使用 groupby 生成区域与品类汇总</small></div><em>按计划</em></article>
+          <article><i>03</i><div><strong>生成第一份分析报告</strong><small>把清洗和聚合结果组织成结论</small></div><em>按计划</em></article>
+        </div>
+        <div className="confirm-row"><span>AI 只能提出建议，计划仍由你决定。</span><button type="button">确认应用调整</button></div>
+      </div>
+    </ProductWindow>
+  )
+}
+
+function ProductWindow({ active, children }: { active: 'overview' | 'study' | 'records' | 'settings'; children: ReactNode }) {
+  return (
+    <div className="product-window">
+      <div className="window-titlebar"><span><i /><i /><i /></span><b>Study Agent</b><small>本地运行</small></div>
+      <div className="window-shell"><ActivityRail active={active} /><main>{children}</main></div>
+    </div>
+  )
 }
 
 function Demo() {
-  const [state, setState] = useState<DemoState>(() => loadDemoState())
-  const [goalInput, setGoalInput] = useState('')
-  const [answers, setAnswers] = useState<string[]>(['', '', ''])
-  const [submissionText, setSubmissionText] = useState('')
+  const [activeIndex, setActiveIndex] = useState(0)
+  const step = tourSteps[activeIndex] ?? tourSteps[0]!
 
-  useEffect(() => {
-    if (!state.startedAt) {
-      const initialized = resetDemoState()
-      setState(initialized)
-    }
-  }, [state.startedAt])
-
-  const updateState = useCallback((updater: (prev: DemoState) => DemoState) => {
-    setState((prev) => {
-      const next = updater(prev)
-      saveDemoState(next)
-      return next
-    })
-  }, [])
-
-  const goToStep = useCallback((step: DemoStep) => {
-    const updated = saveCurrentStep(step)
-    setState(updated)
-  }, [])
-
-  const handleReset = useCallback(() => {
-    const fresh = resetDemoState()
-    setState(fresh)
-    setGoalInput('')
-    setAnswers(['', '', ''])
-    setSubmissionText('')
-  }, [])
-
-  const handleGoalSubmit = useCallback(() => {
-    if (!goalInput.trim()) return
-    const goal = { ...MOCK_GOAL, raw: goalInput.trim() }
-    const updated = saveGoal(goal)
-    setState(updated)
-    goToStep('interview')
-  }, [goalInput, goToStep])
-
-  const handleInterviewSubmit = useCallback(() => {
-    const filled: InterviewAnswer[] = MOCK_INTERVIEW_ANSWERS.map((q, i) => ({
-      ...q,
-      answer: answers[i]?.trim() || q.answer,
-    }))
-    const updated = saveInterviewAnswers(filled)
-    setState(updated)
-    updateState((prev) => ({
-      ...prev,
-      roadmap: MOCK_ROADMAP,
-      dailyTasks: MOCK_DAILY_TASKS,
-    }))
-    goToStep('roadmap')
-  }, [answers, updateState, goToStep])
-
-  const handleStartDailyTask = useCallback(() => {
-    goToStep('daily_task')
-  }, [goToStep])
-
-  const handleSubmissionSubmit = useCallback(() => {
-    if (!submissionText.trim()) return
-    const submission: Submission = {
-      id: `sub-${Date.now()}`,
-      taskId: 'task-1',
-      content: submissionText.trim(),
-      submittedAt: new Date().toISOString(),
-    }
-    const updated = saveSubmission(submission)
-    setState(updated)
-    updateState((prev) => ({
-      ...prev,
-      evaluations: MOCK_EVALUATIONS,
-    }))
-    goToStep('evaluation')
-  }, [submissionText, updateState, goToStep])
-
-  const handleViewKnowledgeCards = useCallback(() => {
-    updateState((prev) => ({
-      ...prev,
-      knowledgeCards: MOCK_KNOWLEDGE_CARDS,
-    }))
-    goToStep('knowledge_cards')
-  }, [updateState, goToStep])
-
-  const handleViewNextPlan = useCallback(() => {
-    updateState((prev) => ({
-      ...prev,
-      nextPlan: MOCK_NEXT_PLAN,
-    }))
-    goToStep('next_plan')
-  }, [updateState, goToStep])
-
-  const currentStepIndex = DEMO_STEPS.indexOf(state.currentStep)
+  const showStep = (index: number) => {
+    setActiveIndex(index)
+    document.querySelector('.tour-stage')?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+  }
 
   return (
-    <div className="demo">
-      <div className="demo-header">
-        <h1>功能演示</h1>
-        <div className="demo-badges">
-          <span className="badge badge-mock">Mock 演示</span>
-          <span className="badge badge-step">
-            步骤 {currentStepIndex + 1} / {DEMO_STEPS.length}
-          </span>
-        </div>
-      </div>
+    <div className="product-tour">
+      <header className="tour-hero">
+        <span>REAL PRODUCT FLOW / 真实产品流程</span>
+        <h1>一次完整学习，<br />在软件里如何发生。</h1>
+        <p>以下界面根据 Study Agent 桌面版的真实信息架构和业务流程重建。无需填写内容，向下滚动或点击步骤即可浏览。</p>
+      </header>
 
-      <div className="demo-notice">
-        <p>这是一个静态演示流程，使用预置 Mock 数据，不调用真实 AI 模型。所有数据保存在浏览器 localStorage 中，刷新后可继续。</p>
-      </div>
-
-      <nav className="step-nav">
-        {DEMO_STEPS.map((step, index) => (
-          <button
-            key={step}
-            className={`step-dot ${index <= currentStepIndex ? 'step-dot--done' : ''} ${step === state.currentStep ? 'step-dot--active' : ''}`}
-            onClick={() => index <= currentStepIndex && goToStep(step)}
-            disabled={index > currentStepIndex}
-          >
-            <span className="step-dot-num">{index + 1}</span>
-            <span className="step-dot-label">{STEP_LABELS[step]}</span>
+      <nav className="tour-step-nav" aria-label="产品流程步骤">
+        {tourSteps.map((item, index) => (
+          <button type="button" className={index === activeIndex ? 'active' : ''} key={item.view} onClick={() => showStep(index)}>
+            <span>{String(index + 1).padStart(2, '0')}</span>{item.label.split(' · ')[1]}
           </button>
         ))}
       </nav>
 
-      <div className="step-content">
-        {state.currentStep === 'goal_input' && (
-          <GoalInputStep
-            value={goalInput}
-            onChange={setGoalInput}
-            onSubmit={handleGoalSubmit}
-          />
-        )}
-        {state.currentStep === 'interview' && (
-          <InterviewStep
-            answers={answers}
-            onChange={setAnswers}
-            onSubmit={handleInterviewSubmit}
-            onBack={() => goToStep('goal_input')}
-          />
-        )}
-        {state.currentStep === 'roadmap' && (
-          <RoadmapStep
-            roadmap={state.roadmap}
-            onContinue={handleStartDailyTask}
-            onBack={() => goToStep('interview')}
-          />
-        )}
-        {state.currentStep === 'daily_task' && (
-          <DailyTaskStep
-            tasks={state.dailyTasks}
-            onContinue={() => goToStep('submission')}
-            onBack={() => goToStep('roadmap')}
-          />
-        )}
-        {state.currentStep === 'submission' && (
-          <SubmissionStep
-            value={submissionText}
-            onChange={setSubmissionText}
-            onSubmit={handleSubmissionSubmit}
-            onBack={() => goToStep('daily_task')}
-          />
-        )}
-        {state.currentStep === 'evaluation' && (
-          <EvaluationStep
-            evaluations={state.evaluations}
-            onContinue={handleViewKnowledgeCards}
-            onBack={() => goToStep('submission')}
-          />
-        )}
-        {state.currentStep === 'knowledge_cards' && (
-          <KnowledgeCardsStep
-            cards={state.knowledgeCards}
-            onContinue={handleViewNextPlan}
-            onBack={() => goToStep('evaluation')}
-          />
-        )}
-        {state.currentStep === 'next_plan' && (
-          <NextPlanStep
-            plan={state.nextPlan}
-            onReset={handleReset}
-            onBack={() => goToStep('knowledge_cards')}
-          />
-        )}
-      </div>
-
-      <div className="demo-footer">
-        <button className="btn btn-reset" onClick={handleReset}>
-          重置演示
-        </button>
-      </div>
-    </div>
-  )
-}
-
-function GoalInputStep({ value, onChange, onSubmit }: {
-  value: string
-  onChange: (v: string) => void
-  onSubmit: () => void
-}) {
-  return (
-    <div className="step-card">
-      <h2>告诉我你的学习目标</h2>
-      <p className="step-desc">用一句话描述你想学什么，系统会帮你制定学习计划。</p>
-      <input
-        type="text"
-        className="input"
-        placeholder="例如：我想学会 Python 数据分析"
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        onKeyDown={(e) => e.key === 'Enter' && onSubmit()}
-      />
-      <button className="btn btn-primary" onClick={onSubmit} disabled={!value.trim()}>
-        确认目标
-      </button>
-    </div>
-  )
-}
-
-function InterviewStep({ answers, onChange, onSubmit, onBack }: {
-  answers: string[]
-  onChange: (a: string[]) => void
-  onSubmit: () => void
-  onBack: () => void
-}) {
-  const questions = MOCK_INTERVIEW_ANSWERS
-
-  return (
-    <div className="step-card">
-      <h2>目标澄清</h2>
-      <p className="step-desc">回答几个问题，帮助系统更好地理解你的需求。</p>
-      {questions.slice(0, 3).map((q, i) => (
-        <div key={q.questionId} className="interview-item">
-          <label className="interview-question">{q.question}</label>
-          <textarea
-            className="input textarea"
-            placeholder="输入你的回答..."
-            value={answers[i] || ''}
-            onChange={(e) => {
-              const next = [...answers]
-              next[i] = e.target.value
-              onChange(next)
-            }}
-          />
+      <section className="tour-stage">
+        <div className="tour-explanation">
+          <span>{step.label}</span>
+          <h2>{step.title}</h2>
+          <p>{step.description}</p>
+          <div className="tour-controls">
+            <button type="button" onClick={() => showStep(Math.max(0, activeIndex - 1))} disabled={activeIndex === 0}>← 上一步</button>
+            <small>{activeIndex + 1} / {tourSteps.length}</small>
+            <button type="button" onClick={() => showStep(Math.min(tourSteps.length - 1, activeIndex + 1))} disabled={activeIndex === tourSteps.length - 1}>下一步 →</button>
+          </div>
         </div>
-      ))}
-      <div className="btn-row">
-        <button className="btn btn-secondary" onClick={onBack}>上一步</button>
-        <button className="btn btn-primary" onClick={onSubmit}>生成计划</button>
-      </div>
-    </div>
-  )
-}
+        <div className="tour-product-frame">
+          {step.view === 'intake' && <IntakeView />}
+          {step.view === 'overview' && <OverviewView />}
+          {step.view === 'study' && <StudyView />}
+          {step.view === 'submission' && <SubmissionView />}
+          {step.view === 'records' && <RecordsView />}
+          {step.view === 'next' && <NextView />}
+        </div>
+      </section>
 
-function RoadmapStep({ roadmap, onContinue, onBack }: {
-  roadmap: { id: string; title: string; description: string; order: number; status: string }[]
-  onContinue: () => void
-  onBack: () => void
-}) {
-  return (
-    <div className="step-card">
-      <h2>学习路线图</h2>
-      <p className="step-desc">基于你的目标，系统生成了以下学习阶段。</p>
-      <div className="roadmap-list">
-        {roadmap.map((stage) => (
-          <div key={stage.id} className={`roadmap-item roadmap-item--${stage.status}`}>
-            <div className="roadmap-order">{stage.order}</div>
-            <div className="roadmap-content">
-              <h3>{stage.title}</h3>
-              <p>{stage.description}</p>
-            </div>
-            <span className={`status-tag status-tag--${stage.status}`}>
-              {stage.status === 'completed' ? '已完成' : stage.status === 'active' ? '进行中' : '待开始'}
-            </span>
-          </div>
-        ))}
-      </div>
-      <div className="btn-row">
-        <button className="btn btn-secondary" onClick={onBack}>上一步</button>
-        <button className="btn btn-primary" onClick={onContinue}>开始今日任务</button>
-      </div>
-    </div>
-  )
-}
-
-function DailyTaskStep({ tasks, onContinue, onBack }: {
-  tasks: { id: string; title: string; description: string; status: string }[]
-  onContinue: () => void
-  onBack: () => void
-}) {
-  return (
-    <div className="step-card">
-      <h2>今日任务</h2>
-      <p className="step-desc">今天的学习任务如下。</p>
-      <div className="task-list">
-        {tasks.map((task) => (
-          <div key={task.id} className={`task-item task-item--${task.status}`}>
-            <div className="task-content">
-              <h3>{task.title}</h3>
-              <p>{task.description}</p>
-            </div>
-            <span className={`status-tag status-tag--${task.status}`}>
-              {task.status === 'completed' ? '已完成' : task.status === 'in_progress' ? '进行中' : '待开始'}
-            </span>
-          </div>
-        ))}
-      </div>
-      <div className="btn-row">
-        <button className="btn btn-secondary" onClick={onBack}>上一步</button>
-        <button className="btn btn-primary" onClick={onContinue}>提交总结</button>
-      </div>
-    </div>
-  )
-}
-
-function SubmissionStep({ value, onChange, onSubmit, onBack }: {
-  value: string
-  onChange: (v: string) => void
-  onSubmit: () => void
-  onBack: () => void
-}) {
-  return (
-    <div className="step-card">
-      <h2>提交学习总结</h2>
-      <p className="step-desc">记录今天的学习内容和收获。</p>
-      <textarea
-        className="input textarea textarea-large"
-        placeholder="描述今天学了什么、遇到了什么问题..."
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-      />
-      <div className="btn-row">
-        <button className="btn btn-secondary" onClick={onBack}>上一步</button>
-        <button className="btn btn-primary" onClick={onSubmit} disabled={!value.trim()}>
-          提交并获取评估
-        </button>
-      </div>
-    </div>
-  )
-}
-
-function EvaluationStep({ evaluations, onContinue, onBack }: {
-  evaluations: { submissionId: string; score: number; feedback: string; strengths: string[]; improvements: string[] }[]
-  onContinue: () => void
-  onBack: () => void
-}) {
-  const evalItem = evaluations[0]
-  if (!evalItem) return null
-
-  return (
-    <div className="step-card">
-      <h2>AI 评估结果</h2>
-      <p className="step-desc">基于你的提交，系统给出了以下评估。</p>
-      <div className="eval-score">
-        <span className="eval-score-num">{evalItem.score}</span>
-        <span className="eval-score-label">/ 100</span>
-      </div>
-      <div className="eval-section">
-        <h3>综合评价</h3>
-        <p>{evalItem.feedback}</p>
-      </div>
-      <div className="eval-section">
-        <h3>优势</h3>
-        <ul>
-          {evalItem.strengths.map((s) => <li key={s}>{s}</li>)}
-        </ul>
-      </div>
-      <div className="eval-section">
-        <h3>改进建议</h3>
-        <ul>
-          {evalItem.improvements.map((s) => <li key={s}>{s}</li>)}
-        </ul>
-      </div>
-      <div className="btn-row">
-        <button className="btn btn-secondary" onClick={onBack}>上一步</button>
-        <button className="btn btn-primary" onClick={onContinue}>查看知识卡片</button>
-      </div>
-    </div>
-  )
-}
-
-function KnowledgeCardsStep({ cards, onContinue, onBack }: {
-  cards: { id: string; type: string; content: string; sourceSubmissionId: string }[]
-  onContinue: () => void
-  onBack: () => void
-}) {
-  const typeLabels: Record<string, string> = {
-    insight: '洞察',
-    misconception: '误区',
-    weakness: '薄弱点',
-    correction: '纠正',
-  }
-  const typeColors: Record<string, string> = {
-    insight: 'card-insight',
-    misconception: 'card-misconception',
-    weakness: 'card-weakness',
-    correction: 'card-correction',
-  }
-
-  return (
-    <div className="step-card">
-      <h2>知识卡片</h2>
-      <p className="step-desc">系统从你的提交中提取了以下知识点。</p>
-      <div className="card-grid">
-        {cards.map((card) => (
-          <div key={card.id} className={`knowledge-card ${typeColors[card.type] || ''}`}>
-            <span className="knowledge-card-type">{typeLabels[card.type] || card.type}</span>
-            <p>{card.content}</p>
-          </div>
-        ))}
-      </div>
-      <div className="btn-row">
-        <button className="btn btn-secondary" onClick={onBack}>上一步</button>
-        <button className="btn btn-primary" onClick={onContinue}>查看下一轮计划</button>
-      </div>
-    </div>
-  )
-}
-
-function NextPlanStep({ plan, onReset, onBack }: {
-  plan: { summary: string; adjustments: string[]; nextFocusAreas: string[] } | null
-  onReset: () => void
-  onBack: () => void
-}) {
-  if (!plan) return null
-
-  return (
-    <div className="step-card">
-      <h2>下一轮计划</h2>
-      <p className="step-desc">基于本次学习情况，系统建议如下调整。</p>
-      <div className="plan-summary">
-        <h3>阶段总结</h3>
-        <p>{plan.summary}</p>
-      </div>
-      <div className="plan-section">
-        <h3>计划调整</h3>
-        <ul>
-          {plan.adjustments.map((a) => <li key={a}>{a}</li>)}
-        </ul>
-      </div>
-      <div className="plan-section">
-        <h3>下阶段重点</h3>
-        <ul>
-          {plan.nextFocusAreas.map((a) => <li key={a}>{a}</li>)}
-        </ul>
-      </div>
-      <div className="btn-row">
-        <button className="btn btn-secondary" onClick={onBack}>上一步</button>
-        <button className="btn btn-primary" onClick={onReset}>重新开始</button>
-      </div>
+      <section className="tour-footnote">
+        <strong>这不是在线学习服务</strong>
+        <p>展示中的目标、学习记录和评价均为虚构数据；网站不会调用模型或上传内容。完整功能只在本地桌面应用中运行。</p>
+      </section>
     </div>
   )
 }
