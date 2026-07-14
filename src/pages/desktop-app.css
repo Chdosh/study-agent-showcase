@@ -1,30 +1,34 @@
 .desktop-app {
   display: flex;
   flex-direction: column;
-  gap: var(--space-2xl);
+  gap: 88px;
+  padding-top: 72px;
 }
 
 .page-title {
-  font-size: 1.5rem;
-  font-weight: 700;
+  max-width: 760px;
+  font: 400 clamp(3rem, 6vw, 5.6rem)/.98 var(--font-display);
+  letter-spacing: -.055em;
 }
 
 .page-desc {
   color: var(--color-text-secondary);
-  margin-top: var(--space-xs);
+  margin-top: -72px;
+  max-width: 540px;
+  font-size: 1.08rem;
 }
 
 .section {
   display: flex;
   flex-direction: column;
-  gap: var(--space-md);
+  gap: 24px;
 }
 
 .section-title {
-  font-size: 1.1rem;
-  font-weight: 600;
-  padding-bottom: var(--space-sm);
-  border-bottom: 1px solid var(--color-border);
+  font: 400 2rem var(--font-display);
+  padding: 22px 0 14px;
+  border-top: 1px solid var(--color-text);
+  border-bottom: 0;
 }
 
 .section-desc {
@@ -40,7 +44,7 @@
 
 .screenshot-card {
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
+  border-radius: 0;
   overflow: hidden;
   background: var(--color-bg);
 }
@@ -50,19 +54,18 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 160px;
-  background: var(--color-bg-tertiary);
+  height: 190px;
+  background: var(--color-text);
   gap: var(--space-sm);
 }
 
 .screenshot-icon {
-  font-size: 2rem;
-  opacity: 0.4;
+  display: none;
 }
 
 .screenshot-label {
   font-size: 0.85rem;
-  color: var(--color-text-muted);
+  color: #fff;
   font-weight: 500;
 }
 
@@ -79,9 +82,10 @@
   align-items: center;
   justify-content: center;
   height: 240px;
-  background: var(--color-bg-tertiary);
-  border-radius: var(--radius-lg);
-  border: 2px dashed var(--color-border);
+  background: var(--color-accent);
+  color: #fff;
+  border-radius: 0;
+  border: 0;
   gap: var(--space-sm);
 }
 
@@ -92,10 +96,10 @@
 
 .video-label {
   font-size: 0.9rem;
-  color: var(--color-text-muted);
+  color: #fff;
 }
 
-.tech-list {
+.desktop-app .tech-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: var(--space-sm);
@@ -106,7 +110,7 @@
   flex-direction: column;
   padding: var(--space-sm) var(--space-md);
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
+  border-radius: 0;
   background: var(--color-bg-secondary);
 }
 
@@ -168,6 +172,7 @@
 }
 
 @media (max-width: 640px) {
+  .desktop-app { gap: 64px; padding-top: 48px; }
   .screenshot-grid {
     grid-template-columns: 1fr;
   }

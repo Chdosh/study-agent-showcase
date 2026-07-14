@@ -2,36 +2,42 @@
 
 ## 当前阶段
 
-Phase 4 已完成（架构与桌面版展示）
+个人作品集视觉重构已完成。
 
-## 已完成
+## 本轮完成
 
-- Phase 1：项目初始化
-- Phase 2：首页与统一布局
-- Phase 3：模拟 Demo（数据层 + UI）
-- Architecture 页面：数据流程图、核心原则（LLM 无状态、持久状态、Schema Guard、Human-in-the-loop、在线版边界）、技术栈、持久化层说明
-- Desktop App 页面：截图占位（6 个）、视频占位、技术栈列表、系统要求、已知限制（7 项）、获取方式
-- lint 通过（零错误）
-- build 通过（47 modules，185.51 kB JS + 16.81 kB CSS）
-- HANDOFF.md 更新
+- 将站点定位从单一 Study Agent 项目页调整为“项目展示为主、个人身份为辅”的综合个人作品集
+- 首页新增个人定位、能力介绍、工作方式与作品索引，Study Agent 继续作为占比最大的旗舰案例
+- 保留全部现有路由：`/`、`/demo`、`/architecture`、`/desktop-app`、`/about`
+- 保留 Demo 的 8 步 Mock 流程、localStorage 恢复与重置逻辑
+- 重构全局导航、页脚、色彩、字体层级、间距与响应式布局
+- 重做 Study Agent 项目展示区，并保留 Demo、架构、桌面版三个明确入口
+- 将 About 页面扩展为个人介绍与工作原则页面
+- 统一 Demo、Architecture、Desktop App 内页的作品集视觉语言，减少表格式卡片感
 
-## 当前任务
+## 技术边界
 
-Phase 4 验收完成。
-
-## 尚未完成
-
-- 部署准备（Phase 5）：README、部署说明、图片压缩、SEO、安全扫描、最终验证
+- 仍为 Vite + React + TypeScript + React Router 静态站点
+- 仅使用原生 CSS，无新增 UI、状态管理或动画框架
+- 无后端、登录、云数据库或真实大模型调用
+- 在线 Demo 仍只使用 Mock 数据与 localStorage
 
 ## 最近验证
 
-- `npm run lint`：零错误
-- `npm run build`：成功
+- `npm run lint`：通过，零错误
+- `npm run build`：通过，48 modules transformed
+- 构建产物：189.64 kB JS、25.09 kB CSS
+
+## 尚未完成
+
+- 使用真实姓名、头像、联系方式和其他项目内容替换当前通用个人文案
+- 为桌面版页面补充真实截图和演示视频
+- Phase 5 发布准备：SEO、图片压缩、安全扫描与最终部署文档
 
 ## 已知问题
 
-暂无。
+- 暂无功能性问题。
 
 ## 下一步
 
-进入 Phase 5：发布准备。
+补充个人资料与更多作品后，进入 Phase 5 发布准备。

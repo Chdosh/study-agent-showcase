@@ -1,89 +1,127 @@
 import { Link } from 'react-router-dom'
 import './home.css'
 
-const entries = [
-  {
-    path: '/demo',
-    title: '在线体验',
-    desc: '基于 Mock 数据的模拟演示流程',
-  },
-  {
-    path: '/architecture',
-    title: '技术架构',
-    desc: 'Agent 数据流、本地优先与 Schema Guard',
-  },
-  {
-    path: '/desktop-app',
-    title: '桌面版',
-    desc: '完整版 Electron 应用功能介绍',
-  },
-]
-
 const capabilities = [
   {
-    title: '目标澄清',
-    desc: '通过对话引导明确学习目标，生成结构化的学习画像',
+    index: '01',
+    title: 'AI 应用工程',
+    desc: '把不确定的模型输出包装成可校验、可恢复的产品流程。',
   },
   {
-    title: '分层计划',
-    desc: '将长期目标分解为 Roadmap、Short Plan 和每日任务',
+    index: '02',
+    title: '本地优先架构',
+    desc: '关注数据所有权、离线能力与可靠的本地持久化。',
   },
   {
-    title: '学习闭环',
-    desc: '执行、记录、提交、评价、复盘的可恢复流程',
+    index: '03',
+    title: '产品原型实现',
+    desc: '从需求、交互到前端落地，快速构建可验证的完整体验。',
   },
   {
-    title: '知识库',
-    desc: '自动从提交中提取误区、薄弱点和洞察，形成证据链',
-  },
-  {
-    title: '计划迭代',
-    desc: '基于学习数据提出计划调整建议，确认后事务性生效',
+    index: '04',
+    title: '系统化设计',
+    desc: '用清晰的数据流、状态边界和异常路径支撑长期演进。',
   },
 ]
 
 function Home() {
   return (
-    <div className="home">
-      <section className="hero">
-        <h1 className="hero-title">把 AI 包装成可靠的学习运行时</h1>
-        <p className="hero-tagline">
-          Study Agent 是本地优先的 Windows 桌面 AI 学习系统，将无状态、概率性的 LLM 转化为确定、可持久化、可校验、可恢复的个人学习教师。
-        </p>
-      </section>
-
-      <section className="entries">
-        <h2 className="section-title">快速入口</h2>
-        <div className="entry-grid">
-          {entries.map((entry) => (
-            <Link key={entry.path} to={entry.path} className="entry-card">
-              <h3 className="entry-title">{entry.title}</h3>
-              <p className="entry-desc">{entry.desc}</p>
-            </Link>
-          ))}
+    <div className="portfolio-home">
+      <section className="portfolio-hero">
+        <div className="hero-kicker">
+          <span className="status-dot" />
+          独立开发者 · AI 产品工程
         </div>
-      </section>
-
-      <section className="capabilities">
-        <h2 className="section-title">核心能力</h2>
-        <div className="capability-grid">
-          {capabilities.map((cap) => (
-            <div key={cap.title} className="capability-card">
-              <h3 className="capability-title">{cap.title}</h3>
-              <p className="capability-desc">{cap.desc}</p>
+        <div className="hero-grid">
+          <h1>构建真正能用的<br /><em>AI 产品。</em></h1>
+          <div className="hero-intro">
+            <p>我关注 AI 应用、本地优先软件与复杂产品原型，把模糊想法变成结构清晰、可以运行的产品。</p>
+            <div className="hero-actions">
+              <a href="#selected-work" className="button button-primary">查看项目 <span>↓</span></a>
+              <Link to="/about" className="text-link">了解我的工作方式 <span>↗</span></Link>
             </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="work-section" id="selected-work">
+        <div className="section-heading">
+          <span>01 / SELECTED WORK</span>
+          <h2>重点项目</h2>
+        </div>
+        <article className="featured-project">
+          <div className="project-copy">
+            <div className="project-meta">
+              <span>旗舰项目 · 2026</span>
+              <span>Electron / React / SQLite / LLM</span>
+            </div>
+            <h3>Study Agent</h3>
+            <p className="project-lead">把概率性的 LLM，包装成可靠的个人学习运行时。</p>
+            <p className="project-description">一个本地优先的 Windows 桌面学习系统。它通过结构化状态、Schema Guard 与 Human-in-the-loop 机制，让目标、计划、执行、评估和复盘形成可持续的学习闭环。</p>
+            <div className="project-links">
+              <Link to="/demo">体验在线 Demo <span>↗</span></Link>
+              <Link to="/architecture">阅读技术架构 <span>↗</span></Link>
+              <Link to="/desktop-app">查看桌面应用 <span>↗</span></Link>
+            </div>
+          </div>
+          <div className="project-visual" aria-label="Study Agent 界面概念图">
+            <div className="visual-window">
+              <div className="visual-bar"><i /><i /><i /><span>study-agent / today</span></div>
+              <div className="visual-body">
+                <aside>
+                  <b>SA</b>
+                  <span className="active" />
+                  <span />
+                  <span />
+                  <span />
+                </aside>
+                <div className="visual-content">
+                  <small>DAY 12 · PYTHON DATA</small>
+                  <h4>今天的学习任务</h4>
+                  <div className="task-line task-line-primary"><i>01</i><span><b>清洗缺失数据</b><small>理解 dropna 与 fillna 的差异</small></span><em>45 min</em></div>
+                  <div className="task-line"><i>02</i><span><b>完成数据练习</b><small>使用真实样例验证处理结果</small></span><em>60 min</em></div>
+                  <div className="progress-row"><span>本周进度</span><div><i /></div><b>68%</b></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <div className="project-index">
+          <div className="project-index-copy">
+            <span>02 / NEXT</span>
+            <h3>更多作品正在整理</h3>
+            <p>这里会持续收录 AI 工具、效率软件和实验性产品。当前先把 Study Agent 的设计与工程过程完整讲清楚。</p>
+          </div>
+          <Link to="/about" className="round-link" aria-label="了解更多">↗</Link>
+        </div>
+      </section>
+
+      <section className="capability-section">
+        <div className="section-heading">
+          <span>02 / CAPABILITIES</span>
+          <h2>我擅长把复杂问题<br />变成清晰系统</h2>
+        </div>
+        <div className="capability-list">
+          {capabilities.map((cap) => (
+            <article key={cap.title}>
+              <span>{cap.index}</span>
+              <h3>{cap.title}</h3>
+              <p>{cap.desc}</p>
+            </article>
           ))}
         </div>
       </section>
 
-      <section className="disclaimer">
-        <h2 className="disclaimer-title">在线版安全声明</h2>
-        <ul className="disclaimer-list">
-          <li>此站点为静态展示，不接入真实大模型，所有 Demo 数据均为 Mock</li>
-          <li>不收集用户输入、不存储真实学习数据到云端</li>
-          <li>完整版应用运行于本地 Electron 环境，数据持久化于本机 SQLite</li>
-          <li>在线版仅用于功能介绍和演示，不提供完整学习服务</li>
-        </ul>
+      <section className="about-strip">
+        <span className="about-label">03 / ABOUT</span>
+        <p>我喜欢处理产品与工程之间那些“不够清楚”的问题：梳理边界、建立可靠的数据流，再用简单直接的界面把系统能力呈现出来。</p>
+        <Link to="/about" className="text-link">更多关于我 <span>↗</span></Link>
+      </section>
+
+      <section className="site-note">
+        <div><span className="status-dot" /><strong>关于这个在线版本</strong></div>
+        <p>这是静态作品展示，不接入真实模型、不收集用户数据。在线 Demo 使用 Mock 数据与 localStorage；完整产品运行在本地 Electron 环境。</p>
       </section>
     </div>
   )

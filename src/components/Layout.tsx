@@ -2,11 +2,11 @@ import { Link, Outlet, useLocation } from 'react-router-dom'
 import './layout.css'
 
 const navItems = [
-  { path: '/', label: '首页' },
-  { path: '/demo', label: '演示' },
+  { path: '/', label: '作品' },
+  { path: '/demo', label: 'Demo' },
   { path: '/architecture', label: '架构' },
-  { path: '/desktop-app', label: '桌面应用' },
-  { path: '/about', label: '关于' },
+  { path: '/desktop-app', label: '桌面版' },
+  { path: '/about', label: '关于我' },
 ]
 
 function Layout() {
@@ -17,7 +17,11 @@ function Layout() {
       <header className="header">
         <nav className="nav">
           <Link to="/" className="nav-brand">
-            Study Agent
+            <span className="brand-mark">P.</span>
+            <span className="brand-copy">
+              <strong>个人作品集</strong>
+              <small>AI 产品与工程实践</small>
+            </span>
           </Link>
           <div className="nav-links">
             {navItems.map((item) => (
@@ -36,7 +40,10 @@ function Layout() {
         <Outlet />
       </main>
       <footer className="footer">
-        <p>Study Agent Showcase &middot; 独立 Web 展示站点</p>
+        <div className="footer-inner">
+          <p>用产品思维做工程，用工程能力实现想法。</p>
+          <p>静态作品集 &middot; React + TypeScript</p>
+        </div>
       </footer>
     </div>
   )

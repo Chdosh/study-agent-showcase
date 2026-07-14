@@ -1,100 +1,25 @@
-.layout {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-
-.header {
-  height: var(--header-height);
-  border-bottom: 1px solid var(--color-border);
-  background: var(--color-bg);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-}
-
-.nav {
-  max-width: var(--max-width);
-  margin: 0 auto;
-  padding: 0 var(--space-lg);
-  height: 100%;
-  display: flex;
-  align-items: center;
-  gap: var(--space-xl);
-}
-
-.nav-brand {
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: var(--color-text);
-  white-space: nowrap;
-}
-
-.nav-brand:hover {
-  color: var(--color-text);
-}
-
-.nav-links {
-  display: flex;
-  gap: var(--space-sm);
-  margin-left: auto;
-}
-
-.nav-link {
-  padding: var(--space-sm) var(--space-md);
-  border-radius: var(--radius-sm);
-  color: var(--color-text-secondary);
-  font-size: 0.9rem;
-  font-weight: 500;
-  transition: color 0.15s, background 0.15s;
-}
-
-.nav-link:hover {
-  color: var(--color-text);
-  background: var(--color-bg-secondary);
-}
-
-.nav-link--active {
-  color: var(--color-accent);
-  background: var(--color-accent-light);
-}
-
-.nav-link--active:hover {
-  color: var(--color-accent);
-  background: var(--color-accent-light);
-}
-
-.main {
-  flex: 1;
-  max-width: var(--max-width);
-  margin: 0 auto;
-  padding: var(--space-3xl) var(--space-lg);
-  width: 100%;
-}
-
-.footer {
-  border-top: 1px solid var(--color-border);
-  padding: var(--space-lg);
-  text-align: center;
-  color: var(--color-text-muted);
-  font-size: 0.85rem;
-}
-
-@media (max-width: 640px) {
-  .nav {
-    gap: var(--space-md);
-  }
-
-  .nav-brand {
-    font-size: 1rem;
-  }
-
-  .nav-link {
-    padding: var(--space-xs) var(--space-sm);
-    font-size: 0.85rem;
-  }
-
-  .main {
-    padding: var(--space-xl) var(--space-md);
-  }
+.layout { min-height: 100vh; display: flex; flex-direction: column; }
+.header { min-height: var(--header-height); border-bottom: 1px solid var(--color-border); background: rgba(244, 241, 234, .94); position: sticky; top: 0; z-index: 100; backdrop-filter: blur(12px); }
+.nav { max-width: var(--max-width); min-height: var(--header-height); margin: 0 auto; padding: 0 24px; display: flex; align-items: center; gap: 40px; }
+.nav-brand { display: inline-flex; align-items: center; gap: 12px; color: var(--color-text); white-space: nowrap; }
+.nav-brand:hover { color: var(--color-text); }
+.brand-mark { width: 34px; height: 34px; display: grid; place-items: center; color: #fff; background: var(--color-text); border-radius: 50%; font: italic 700 1rem var(--font-display); }
+.brand-copy { display: flex; flex-direction: column; line-height: 1.15; }
+.brand-copy strong { font-size: .88rem; letter-spacing: -.01em; }
+.brand-copy small { margin-top: 4px; color: var(--color-text-muted); font: .58rem var(--font-mono); letter-spacing: .08em; text-transform: uppercase; }
+.nav-links { display: flex; align-items: center; gap: 4px; margin-left: auto; }
+.nav-link { min-height: 44px; padding: 0 13px; display: inline-flex; align-items: center; color: var(--color-text-secondary); font-size: .82rem; font-weight: 550; border-radius: var(--radius-sm); transition: color .15s, background .15s; }
+.nav-link:hover { color: var(--color-text); background: rgba(255,255,255,.55); }
+.nav-link--active { color: var(--color-accent); background: var(--color-accent-light); }
+.nav-link--active:hover { color: var(--color-accent); background: var(--color-accent-light); }
+.main { flex: 1; max-width: var(--max-width); margin: 0 auto; padding: 0 24px 112px; width: 100%; }
+.footer { border-top: 1px solid var(--color-border); }
+.footer-inner { max-width: var(--max-width); margin: 0 auto; padding: 30px 24px; display: flex; justify-content: space-between; gap: 24px; color: var(--color-text-muted); font: .68rem var(--font-mono); letter-spacing: .05em; text-transform: uppercase; }
+@media (max-width: 720px) {
+  .header { position: static; }
+  .nav { padding: 14px 18px; align-items: flex-start; flex-direction: column; gap: 12px; }
+  .nav-links { width: 100%; margin-left: 0; overflow-x: auto; padding-bottom: 2px; }
+  .nav-link { flex: 0 0 auto; padding: 0 11px; }
+  .main { padding: 0 18px 72px; }
+  .footer-inner { flex-direction: column; padding: 26px 18px; }
 }

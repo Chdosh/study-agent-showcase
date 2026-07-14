@@ -1,7 +1,8 @@
 .demo {
   display: flex;
   flex-direction: column;
-  gap: var(--space-xl);
+  gap: 28px;
+  padding-top: 64px;
 }
 
 .demo-header {
@@ -13,8 +14,8 @@
 }
 
 .demo-header h1 {
-  font-size: 1.5rem;
-  font-weight: 700;
+  font: 400 clamp(2.8rem, 6vw, 5rem)/1 var(--font-display);
+  letter-spacing: -.05em;
 }
 
 .demo-badges {
@@ -43,7 +44,7 @@
 .demo-notice {
   padding: var(--space-md);
   background: var(--color-accent-light);
-  border-radius: var(--radius-md);
+  border-radius: 0;
   border-left: 3px solid var(--color-accent);
 }
 
@@ -56,7 +57,9 @@
   display: flex;
   gap: var(--space-xs);
   overflow-x: auto;
-  padding-bottom: var(--space-sm);
+  padding: 20px 0;
+  border-top: 1px solid var(--color-text);
+  border-bottom: 1px solid var(--color-border);
 }
 
 .step-dot {
@@ -65,8 +68,9 @@
   gap: var(--space-xs);
   padding: var(--space-xs) var(--space-sm);
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-sm);
-  background: var(--color-bg);
+  min-height: 42px;
+  border-radius: 0;
+  background: var(--color-bg-secondary);
   cursor: pointer;
   white-space: nowrap;
   font-size: 0.8rem;
@@ -120,9 +124,9 @@
 .step-card {
   padding: var(--space-xl);
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  background: var(--color-bg);
-  box-shadow: var(--shadow-sm);
+  border-radius: 0;
+  background: var(--color-bg-secondary);
+  box-shadow: var(--shadow-md);
 }
 
 .step-card h2 {
