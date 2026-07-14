@@ -6,6 +6,7 @@
 
 ## 本轮完成
 
+- 为 Study Agent 项目页补充 GitHub 仓库入口；Image to PowerPoint 仓库入口已确认存在
 - 收紧 Study Agent 首屏两栏与页面段落间距，并将各段标题统一改为左对齐
 - 浏览器标签页标题改为“冬生”，并将页面内容最大宽度从 1180px 调整为 1360px
 - 将 Project 03 替换为 Image to PowerPoint 工作流项目页，并接入首页与导航

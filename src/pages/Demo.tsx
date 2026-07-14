@@ -221,7 +221,7 @@ function Demo() {
             <dl><div><dt>角色</dt><dd>产品设计 / 全栈开发</dd></div><div><dt>平台</dt><dd>Windows Desktop</dd></div><div><dt>年份</dt><dd>2026</dd></div></dl>
           </div>
         </div>
-        <nav className="project-anchor-nav" aria-label="项目内容导航"><a href="#product-flow">产品流程</a><a href="#system-flow">业务数据流</a><a href="#architecture">技术架构</a></nav>
+        <nav className="project-anchor-nav" aria-label="项目内容导航"><a href="#product-flow">产品流程</a><a href="#system-flow">业务数据流</a><a href="#architecture">技术架构</a><a href="https://github.com/Chdosh/Study_plugin" target="_blank" rel="noreferrer">GitHub ↗</a></nav>
       </header>
 
       <section className="project-section product-flow-section" id="product-flow">
