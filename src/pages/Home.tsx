@@ -28,9 +28,10 @@ const futureProjects = [
   {
     number: '02',
     path: '/demo2',
-    title: 'Project 02',
-    type: '项目位置已预留',
-    description: '用于你的第二个项目：后续补充项目名称、核心价值、技术栈和详情入口即可。',
+    title: 'AI Learning Copilot',
+    type: 'Python Desktop · 2026',
+    description: '一键截图、OCR 识别、AI 翻译解释，并自动沉淀为个人知识库。',
+    status: '已发布',
   },
   {
     number: '03',
@@ -38,6 +39,7 @@ const futureProjects = [
     title: 'Project 03',
     type: '项目位置已预留',
     description: '用于你的第三个项目：可以放产品截图、过程说明，并复用 Study Agent 的案例结构。',
+    status: '准备中',
   },
 ]
 
@@ -104,8 +106,8 @@ function Home() {
           {futureProjects.map((project) => (
             <Link className="future-project" key={project.number} to={project.path}>
               <div className="future-project-meta">
-                <span>{project.number} / FUTURE WORK</span>
-                <em>准备中</em>
+                <span>{project.number} / {project.number === '02' ? 'SELECTED WORK' : 'FUTURE WORK'}</span>
+                <em>{project.status}</em>
               </div>
               <div>
                 <small>{project.type}</small>
@@ -142,7 +144,7 @@ function Home() {
 
       <section className="site-note">
         <div><span className="status-dot" /><strong>关于这个在线版本</strong></div>
-        <p>这是静态作品展示，不接入真实模型、不收集用户数据。在线 Demo 只展示虚构案例；完整产品运行在本地 Electron 环境。</p>
+        <p>这是静态作品展示，不接入真实模型、不收集用户数据。在线流程使用模拟内容还原真实桌面软件；完整产品运行在本地环境。</p>
       </section>
     </div>
   )

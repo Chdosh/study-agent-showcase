@@ -4,7 +4,7 @@ import './layout.css'
 const navItems = [
   { path: '/', label: '作品' },
   { path: '/demo', label: 'Study Agent' },
-  { path: '/demo2', label: 'Project 02' },
+  { path: '/demo2', label: 'AI Learning Copilot' },
   { path: '/demo3', label: 'Project 03' },
   { path: '/about', label: '关于我' },
 ]

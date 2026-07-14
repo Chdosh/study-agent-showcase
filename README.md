@@ -1,6 +1,6 @@
-# Personal Portfolio & Study Agent Showcase
+# Personal Portfolio Showcase
 
-个人作品展示网站。当前重点展示本地优先的桌面学习应用 Study Agent，包括真实产品流程、技术架构和桌面版介绍，并为后续项目预留扩展位置。
+个人作品展示网站，目前收录 Study Agent 与 AI Learning Copilot 两个桌面学习工具，并为后续项目保留扩展位置。
 
 ## 技术栈
 
