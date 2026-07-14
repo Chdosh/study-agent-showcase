@@ -36,10 +36,10 @@ const futureProjects = [
   {
     number: '03',
     path: '/demo3',
-    title: 'Project 03',
-    type: '项目位置已预留',
-    description: '用于你的第三个项目：可以放产品截图、过程说明，并复用 Study Agent 的案例结构。',
-    status: '准备中',
+    title: 'Image to PowerPoint',
+    type: 'Codex Workflow · 2026',
+    description: '将学术架构图和复杂信息图，转换为大部分内容可编辑的 PowerPoint。',
+    status: '已发布',
   },
 ]
 
@@ -106,7 +106,7 @@ function Home() {
           {futureProjects.map((project) => (
             <Link className="future-project" key={project.number} to={project.path}>
               <div className="future-project-meta">
-                <span>{project.number} / {project.number === '02' ? 'SELECTED WORK' : 'FUTURE WORK'}</span>
+                <span>{project.number} / SELECTED WORK</span>
                 <em>{project.status}</em>
               </div>
               <div>

@@ -1,6 +1,6 @@
 # Personal Portfolio Showcase
 
-个人作品展示网站，目前收录 Study Agent 与 AI Learning Copilot 两个桌面学习工具，并为后续项目保留扩展位置。
+个人作品展示网站，目前收录 Study Agent、AI Learning Copilot 与 Image to PowerPoint Workflow。
 
 ## 技术栈
 
