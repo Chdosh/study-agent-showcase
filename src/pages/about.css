@@ -1,25 +1,34 @@
-.about-page { display: flex; flex-direction: column; gap: 96px; }
-.about-hero { padding: 72px 0 48px; border-bottom: 1px solid var(--color-border); }
-.about-hero > span, .about-label { font: 600 0.72rem/1 var(--font-mono); letter-spacing: .14em; color: var(--color-accent); }
-.about-hero h1 { max-width: 850px; margin-top: 28px; font: 400 clamp(3rem, 7vw, 6rem)/.98 var(--font-display); letter-spacing: -.055em; }
-.about-layout { display: grid; grid-template-columns: 3fr 7fr; gap: 8%; }
-.about-layout aside { font: 600 .72rem/1.8 var(--font-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--color-text-muted); }
-.about-copy { max-width: 690px; }
-.about-copy p { margin-bottom: 24px; color: var(--color-text-secondary); font-size: 1.05rem; }
-.about-copy .about-lead { color: var(--color-text); font: 400 clamp(1.45rem, 3vw, 2.2rem)/1.35 var(--font-display); }
-.principles-list { border-top: 1px solid var(--color-text); }
-.principles-list h2 { padding: 28px 0 52px; font: 400 2rem var(--font-display); }
-.principles-list > div { display: grid; grid-template-columns: 1fr 3fr 4fr; gap: 24px; padding: 28px 0; border-top: 1px solid var(--color-border); align-items: baseline; }
-.principles-list span { font: .75rem var(--font-mono); color: var(--color-accent); }
-.principles-list h3 { font-size: 1.1rem; }
-.principles-list p { color: var(--color-text-secondary); }
-.about-cta { padding: 52px; background: var(--color-text); color: var(--color-bg); display: flex; justify-content: space-between; align-items: center; gap: 24px; }
-.about-cta p { font: 400 clamp(1.5rem, 3vw, 2.4rem) var(--font-display); }
-@media (max-width: 680px) {
-  .about-page { gap: 64px; }
-  .about-hero { padding-top: 40px; }
-  .about-layout { grid-template-columns: 1fr; }
-  .principles-list > div { grid-template-columns: 42px 1fr; }
-  .principles-list p { grid-column: 2; }
-  .about-cta { padding: 32px 24px; align-items: flex-start; flex-direction: column; }
-}
+.about-page { display: flex; flex-direction: column; gap: 92px; }
+.about-hero { padding: 72px 0 48px; border-bottom: 1px solid var(--color-text); }
+.about-hero > span, .about-section-title > span, .about-profile > span { font: 600 .7rem/1 var(--font-mono); letter-spacing: .14em; color: var(--color-accent); }
+.about-hero-grid { margin-top: 42px; display: grid; grid-template-columns: 2fr 1fr; gap: 8%; align-items: end; }
+.about-hero h1 { font: 400 clamp(4.5rem, 10vw, 9rem)/.85 var(--font-display); letter-spacing: -.07em; }
+.about-hero-grid > div:first-child p { margin-top: 20px; color: var(--color-accent); font: 400 clamp(1.6rem, 3vw, 2.7rem) var(--font-display); }
+.about-contact { display: flex; flex-direction: column; gap: 10px; color: var(--color-text-secondary); font-size: .8rem; }
+.about-contact a { width: fit-content; padding-bottom: 3px; color: var(--color-text); border-bottom: 1px solid var(--color-border); font-weight: 650; }
+.about-profile { display: grid; grid-template-columns: 1fr 3fr; gap: 32px; }
+.about-profile > div { max-width: 900px; }
+.about-profile p { margin-bottom: 22px; color: var(--color-text-secondary); font-size: 1rem; line-height: 1.8; }
+.about-profile .about-lead { color: var(--color-text); font: 400 clamp(1.65rem, 3.2vw, 2.7rem)/1.3 var(--font-display); letter-spacing: -.025em; }
+.about-experience, .about-skills { display: flex; flex-direction: column; }
+.about-section-title { padding: 22px 0 38px; display: grid; grid-template-columns: 1fr 3fr; border-top: 1px solid var(--color-text); }
+.about-section-title h2 { font: 400 clamp(2rem, 4vw, 3.5rem) var(--font-display); }
+.about-experience > article { padding: 34px 0; display: grid; grid-template-columns: 1fr 3fr; gap: 32px; border-top: 1px solid var(--color-border); }
+.experience-meta { display: flex; flex-direction: column; gap: 8px; color: var(--color-text-muted); font: .65rem var(--font-mono); }
+.experience-meta strong { color: var(--color-accent); }
+.about-experience article > div:last-child { max-width: 850px; }
+.about-experience h3 { font: 400 1.7rem var(--font-display); }
+.about-experience p { margin-top: 12px; color: var(--color-text-secondary); }
+.about-experience ul { margin: 18px 0 20px; padding-left: 18px; color: var(--color-text-secondary); font-size: .86rem; line-height: 1.85; }
+.about-experience article a { padding-bottom: 4px; border-bottom: 1px solid var(--color-text); font-size: .78rem; font-weight: 700; }
+.skills-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--color-border); border: 1px solid var(--color-border); }
+.skills-grid article { min-height: 240px; padding: 26px; display: flex; flex-direction: column; background: var(--color-bg-secondary); }
+.skills-grid article > span { color: var(--color-accent); font: .68rem var(--font-mono); }
+.skills-grid h3 { margin-top: auto; font: 400 1.4rem var(--font-display); }
+.skills-grid p { margin-top: 12px; color: var(--color-text-secondary); font-size: .84rem; line-height: 1.75; }
+.about-boundary { padding: 48px; display: grid; grid-template-columns: 2fr 1fr; gap: 10%; color: #fff; background: var(--color-text); }
+.about-boundary span { color: #9eb2ff; font: .65rem var(--font-mono); }.about-boundary h2 { max-width: 700px; margin-top: 22px; font: 400 clamp(1.8rem, 3.2vw, 2.8rem)/1.25 var(--font-display); }.about-boundary > p { align-self: end; color: #b7bbc2; font-size: .82rem; line-height: 1.8; }
+.about-cta { padding: 46px 0; display: flex; justify-content: space-between; align-items: center; gap: 30px; border-top: 1px solid var(--color-text); }
+.about-cta > p { max-width: 720px; font: 400 clamp(1.4rem, 2.7vw, 2.2rem) var(--font-display); }
+.about-cta > div { display: flex; align-items: center; gap: 20px; flex: 0 0 auto; }.about-github { font-size: .78rem; font-weight: 700; }
+@media (max-width: 760px) { .about-page { gap: 66px; }.about-hero { padding-top: 46px; }.about-hero-grid, .about-profile, .about-section-title, .about-experience > article, .about-boundary { grid-template-columns: 1fr; }.about-hero-grid { gap: 40px; }.about-profile, .about-section-title, .about-experience > article { gap: 22px; }.skills-grid { grid-template-columns: 1fr; }.about-boundary { padding: 34px 26px; }.about-cta { align-items: flex-start; flex-direction: column; }.about-cta > div { flex-wrap: wrap; } }

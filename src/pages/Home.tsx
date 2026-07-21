@@ -4,23 +4,23 @@ import './home.css'
 const capabilities = [
   {
     index: '01',
-    title: 'AI 应用工程',
-    desc: '把不确定的模型输出包装成可校验、可恢复的产品流程。',
+    title: 'Guarded LLM Workflow',
+    desc: 'JSON Mode、Zod 校验、受约束修复与人工确认，让模型建议不能越权改状态。',
   },
   {
     index: '02',
-    title: '本地优先架构',
-    desc: '关注数据所有权、离线能力与可靠的本地持久化。',
+    title: 'Durable State',
+    desc: '用 SQLite 保存目标、计划、Session、提交和评价，重启后从正式状态恢复。',
   },
   {
     index: '03',
-    title: '产品原型实现',
-    desc: '从需求、交互到前端落地，快速构建可验证的完整体验。',
+    title: 'Recoverable Workflow',
+    desc: '把失败、重试、幂等和事务纳入主流程，而不是只处理成功路径。',
   },
   {
     index: '04',
-    title: '系统化设计',
-    desc: '用清晰的数据流、状态边界和异常路径支撑长期演进。',
+    title: 'AI 辅助工程实践',
+    desc: '独立完成需求拆解、交互、模型接入、数据持久化、测试与持续迭代。',
   },
 ]
 
@@ -49,17 +49,27 @@ function Home() {
       <section className="portfolio-hero">
         <div className="hero-kicker">
           <span className="status-dot" />
-          独立开发者 · AI 产品工程
+          陈东升 · 2026 应届 · 计算机科学与技术
         </div>
         <div className="hero-grid">
-          <h1>构建真正能用的<br /><em>AI 产品。</em></h1>
+          <h1>AI 应用<br /><em>开发工程师。</em></h1>
           <div className="hero-intro">
-            <p>我关注 AI 应用、本地优先软件与复杂产品原型，把模糊想法变成结构清晰、可以运行的产品。</p>
+            <p>独立开发本地优先的长周期学习 Agent，重点实践结构化 LLM Workflow、持久状态、异常恢复与可验证执行闭环。</p>
             <div className="hero-actions">
-              <a href="#selected-work" className="button button-primary">查看项目 <span>↓</span></a>
-              <Link to="/about" className="text-link">了解我的工作方式 <span>↗</span></Link>
+              <Link to="/demo" className="button button-primary">查看核心项目 <span>↗</span></Link>
+              <a href="mailto:cdongs@outlook.com" className="text-link">联系我 <span>↗</span></a>
             </div>
           </div>
+        </div>
+      </section>
+
+      <section className="home-evidence" aria-label="Study Agent 真实运行证据">
+        <div className="evidence-heading"><span>VERIFIED SNAPSHOT</span><p>Study Agent 当前本地开发库快照 · 2026-07-21</p></div>
+        <div className="evidence-grid">
+          <article><strong>60</strong><span>Focus Session</span><small>数据库 study_sessions 总记录数</small></article>
+          <article><strong>136</strong><span>完成 Action</span><small>daily_guide_actions.status = done</small></article>
+          <article><strong>42</strong><span>AI 调用记录</span><small>含 Token、延迟、错误分类与 Trace ID</small></article>
+          <article><strong>101</strong><span>本次测试通过</span><small>npm test 实际执行；6 项真实 API 契约测试跳过</small></article>
         </div>
       </section>
 
@@ -75,9 +85,9 @@ function Home() {
               <span>Electron / React / SQLite / LLM</span>
             </div>
             <h3>Study Agent</h3>
-            <p className="project-lead">把概率性的 LLM，包装成可靠的个人学习运行时。</p>
-            <p className="project-description">一个本地优先的 Windows 桌面学习系统。它通过结构化状态、Schema Guard 与 Human-in-the-loop 机制，让目标、计划、执行、评估和复盘形成可持续的学习闭环。</p>
-            <div className="project-links"><Link to="/demo">查看完整项目 <span>↗</span></Link></div>
+            <p className="project-lead">不是一次性生成计划，而是持续保存状态并根据执行结果推进。</p>
+            <p className="project-description">Electron + React 桌面应用。SQLite 是长期状态源，模型输出经过 JSON Mode、Zod 校验与受约束修复；计划变更需确认，评价事务支持失败恢复与幂等推进。</p>
+            <div className="project-links"><Link to="/demo">查看工程证据 <span>↗</span></Link><a href="https://github.com/Chdosh/Study_plugin" target="_blank" rel="noreferrer">查看代码 <span>↗</span></a></div>
           </div>
           <div className="project-visual" aria-label="Study Agent 界面概念图">
             <div className="visual-window">
@@ -123,7 +133,7 @@ function Home() {
       <section className="capability-section">
         <div className="section-heading">
           <span>02 / CAPABILITIES</span>
-          <h2>我擅长把复杂问题<br />变成清晰系统</h2>
+          <h2>把模型能力纳入<br />可验证的应用流程</h2>
         </div>
         <div className="capability-list">
           {capabilities.map((cap) => (
@@ -138,7 +148,7 @@ function Home() {
 
       <section className="about-strip">
         <span className="about-label">03 / ABOUT</span>
-        <p>我喜欢处理产品与工程之间那些“不够清楚”的问题：梳理边界、建立可靠的数据流，再用简单直接的界面把系统能力呈现出来。</p>
+        <p>南京理工大学紫金学院计算机科学与技术专业。能够独立完成需求拆解、交互实现、模型接入、本地数据持久化和核心流程测试。</p>
         <Link to="/about" className="text-link">更多关于我 <span>↗</span></Link>
       </section>
 

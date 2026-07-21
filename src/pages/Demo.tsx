@@ -64,7 +64,31 @@ const techStack = [
   ['桌面端', 'Electron', 'React', 'TypeScript'],
   ['数据层', 'SQLite', 'Drizzle ORM', 'Zod'],
   ['AI 层', 'OpenAI-compatible API', 'DeepSeek'],
-  ['质量保障', 'Vitest', 'Playwright', 'Schema Tests'],
+  ['质量保障', 'Vitest', 'TypeScript', 'Migration Tests'],
+]
+
+const aiTransactionFlow = [
+  ['Context Build', 'ContextBuilder 按操作筛选字段，并将上下文限制在 4000 Token 预算内。', 'src/main/services/context-builder.ts'],
+  ['LLM Proposal', 'Agent 只生成结构化内容或建议，不直接修改正式学习状态。', 'src/main/ai/agents.ts'],
+  ['Parse + Normalize', '提取 JSON，并兼容百分比、中文枚举和浮点分钟等常见模型偏差。', 'src/shared/schemas.ts'],
+  ['Zod Validation', 'Schema 校验失败时只允许一次携带错误原因的受约束修复。', 'src/main/ai/ai-client.ts'],
+  ['Confirm / Reject', '重大计划变化先保存为 pending proposal，由用户确认或拒绝。', 'plan-change-persistence.ts'],
+  ['Transaction Commit', '提交、评价、决策与状态推进按事务和幂等规则写入 SQLite。', 'evaluation-persistence.ts'],
+]
+
+const dataGroups = [
+  ['目标与计划', 'goals · roadmap_stages · short_plan_days · daily_guides'],
+  ['执行现场', 'daily_guide_tasks · daily_guide_actions · study_sessions'],
+  ['结果证据', 'learning_submissions · learning_evaluations · next_step_decisions'],
+  ['上下文与知识', 'question_threads · knowledge_items · learner_facts'],
+  ['变更与恢复', 'plan_adjustment_proposals · plan_versions · generation_locks'],
+  ['可观测性', 'ai_reviews · prompt_profiles · prompt_versions'],
+]
+
+const failureCases = [
+  ['浮点数进入整数字段', 'mastery、estimatedMinutes 和 dayIndex 先进行显式舍入与上下界约束，再进入 Zod Schema。', 'schemas.test.ts：浮点掌握度、分钟和 dayIndex'],
+  ['非法 JSON / 字段缺失', '首次解析或 Schema 校验失败后，系统把错误摘要交给模型修复一次；再次失败则分类为 schema_violation。', 'ai-client.test.ts：修复成功与二次失败'],
+  ['重复评价导致重复推进', '提交先持久化，评价结果事务写入；恢复函数可重复调用，同一评价不会生成第二次阶段推进。', 'store.test.ts：evaluation transaction / idempotent recovery'],
 ]
 
 function ActivityRail({ active }: { active: 'overview' | 'study' | 'records' | 'settings' }) {
@@ -216,16 +240,27 @@ function Demo() {
         <div className="project-hero-grid">
           <h1>Study<br /><em>Agent</em></h1>
           <div>
-            <p className="project-hero-lead">把概率性的 LLM，包装成可靠、可恢复的个人学习运行时。</p>
-            <p>一个运行在 Windows 本地的 AI 学习系统。它将目标、计划、执行、提交、评价和复盘组织成长期学习闭环，而不是一次性的聊天对话。</p>
+            <p className="project-hero-lead">不是一次性生成计划，而是持续保存状态并根据执行结果推进。</p>
+            <p>一个运行在 Windows 本地的长周期学习 Agent。SQLite 保存目标、计划、执行、提交、评价和复盘；LLM 只在明确边界内生成结构化内容。</p>
             <dl><div><dt>角色</dt><dd>产品设计 / 全栈开发</dd></div><div><dt>平台</dt><dd>Windows Desktop</dd></div><div><dt>年份</dt><dd>2026</dd></div></dl>
           </div>
         </div>
-        <nav className="project-anchor-nav" aria-label="项目内容导航"><a href="#product-flow">产品流程</a><a href="#system-flow">业务数据流</a><a href="#architecture">技术架构</a><a href="https://github.com/Chdosh/Study_plugin" target="_blank" rel="noreferrer">GitHub ↗</a></nav>
+        <nav className="project-anchor-nav" aria-label="项目内容导航"><a href="#evidence">运行证据</a><a href="#product-flow">真实流程</a><a href="#ai-transaction">AI 事务</a><a href="#architecture">技术架构</a><a href="#failures">异常案例</a><a href="https://github.com/Chdosh/Study_plugin" target="_blank" rel="noreferrer">GitHub ↗</a></nav>
       </header>
 
+      <section className="project-section project-evidence-section" id="evidence">
+        <header className="project-section-heading"><span>01 / VERIFIED SNAPSHOT</span><div><h2>软件真实运行过，<br />数字有查询口径。</h2><p>以下为 2026-07-21 对本机开发库进行只读聚合查询的结果。只展示数量，不复制数据库、日志或学习内容。</p></div></header>
+        <div className="project-metric-grid">
+          <article><strong>60</strong><span>Session</span><small>study_sessions 全部记录；54 completed / 5 skipped / 1 active</small></article>
+          <article><strong>136</strong><span>完成 Action</span><small>daily_guide_actions 中 status = done；另有 67 skipped</small></article>
+          <article><strong>42</strong><span>AI 调用记录</span><small>ai_reviews 快照；记录 Token、延迟、错误分类和 Trace ID</small></article>
+          <article><strong>39</strong><span>业务数据表</span><small>当前 SQLite 中非系统表数量，覆盖计划、执行、评价与恢复</small></article>
+        </div>
+        <div className="evidence-source"><span>证据来源</span><code>%APPDATA%/study-supervisor/study-supervisor.db</code><p>页面不公开原始记录；统计口径可由对应表和状态字段复核。</p></div>
+      </section>
+
       <section className="project-section product-flow-section" id="product-flow">
-        <header className="project-section-heading"><span>01 / PRODUCT FLOW</span><div><h2>一次完整学习，<br />在软件里如何发生。</h2><p>界面根据桌面版真实信息架构和业务状态重建。无需填写内容，点击步骤即可浏览。</p></div></header>
+        <header className="project-section-heading"><span>02 / PRODUCT FLOW</span><div><h2>一次完整学习，<br />在软件里如何发生。</h2><p>界面根据桌面版真实信息架构和业务状态重建。无需填写内容，点击步骤即可浏览；这是静态重建，不是在线 SaaS。</p></div></header>
         <nav className="tour-step-nav" aria-label="产品流程步骤">
           {tourSteps.map((item, index) => (
             <button type="button" className={index === activeIndex ? 'active' : ''} key={item.view} onClick={() => showStep(index)}>
@@ -255,8 +290,13 @@ function Demo() {
         </div>
       </section>
 
+      <section className="project-section" id="ai-transaction">
+        <header className="project-section-heading"><span>03 / GUARDED AI TRANSACTION</span><div><h2>模型只能提案，<br />程序负责验证与提交。</h2><p>13 类 AI 操作拥有不同的字段白名单；上下文构建、输出修复、用户确认和事务写入形成一条受保护的调用链。</p></div></header>
+        <div className="ai-transaction-flow">{aiTransactionFlow.map(([title, description, module], index) => <article key={title}><span>0{index + 1}</span><h3>{title}</h3><p>{description}</p><code>{module}</code></article>)}</div>
+      </section>
+
       <section className="project-section" id="system-flow">
-        <header className="project-section-heading"><span>02 / SYSTEM FLOW</span><div><h2>从目标到下一轮计划</h2><p>应用保存长期状态，模型只在明确边界内生成内容。每个结果都会成为下一次学习的上下文。</p></div></header>
+        <header className="project-section-heading"><span>04 / STATE FLOW</span><div><h2>状态从目标推进到下一轮计划</h2><p>Task 是提交和评价的中心；Action 是执行步骤；Session 是一次可暂停恢复的实际执行记录。评价通过后，程序才推进正式状态。</p></div></header>
         <div className="system-flow-diagram">
           {systemFlow.map(([label, description], index) => (
             <article key={label}><span>{String(index + 1).padStart(2, '0')}</span><strong>{label}</strong><small>{description}</small>{index < systemFlow.length - 1 && <i>→</i>}</article>
@@ -265,22 +305,34 @@ function Demo() {
       </section>
 
       <section className="project-section" id="architecture">
-        <header className="project-section-heading"><span>03 / ARCHITECTURE</span><div><h2>让 AI 能力服从可靠的应用状态</h2><p>核心不是多调用一次模型，而是确保任何一次失败、暂停或重启之后，用户仍能回到正确位置。</p></div></header>
+        <header className="project-section-heading"><span>05 / RUNTIME ARCHITECTURE</span><div><h2>让 AI 能力服从可靠的应用状态</h2><p>Renderer 不接触数据库和 API Key；preload / IPC 连接 Application Service，服务层再协调 Context、Agent、Store 与 SQLite。</p></div></header>
         <div className="architecture-principles">
           {architecturePrinciples.map(([title, description], index) => <article key={title}><span>0{index + 1}</span><h3>{title}</h3><p>{description}</p></article>)}
         </div>
         <div className="architecture-layers">
-          <div className="layer renderer"><span>Renderer</span><strong>概览 / 学习 / 记录 / 设置</strong><small>只消费共享业务状态</small></div>
+          <div className="layer renderer"><span>React Renderer</span><strong>概览 / 学习 / 记录 / 设置</strong><small>App.tsx · pages/* · domain/*</small></div>
           <i>↓</i>
-          <div className="layer runtime"><span>Application Runtime</span><strong>状态机 · 校验 · 恢复 · 上下文构建</strong><small>程序推进正式状态</small></div>
+          <div className="layer runtime"><span>preload / IPC / Application Service</span><strong>命令边界 · 状态机 · 校验 · 恢复</strong><small>preload/index.ts · main/ipc.ts · app-service.ts</small></div>
           <i>↓</i>
-          <div className="layer split"><div><span>SQLite</span><strong>Durable Source of Truth</strong></div><div><span>LLM</span><strong>内容与建议生成</strong></div></div>
+          <div className="layer split"><div><span>SQLite Store</span><strong>Durable Source of Truth</strong></div><div><span>LLM Client + Zod</span><strong>结构化内容与建议</strong></div></div>
         </div>
       </section>
 
+      <section className="project-section" id="persistence">
+        <header className="project-section-heading"><span>06 / PERSISTENCE</span><div><h2>39 张表不是卖点，<br />可追溯的业务事实才是。</h2><p>数据库同时保留原始事实、派生评价、计划版本和恢复锁。下面只列核心表组，完整定义位于 src/main/db/schema.ts。</p></div></header>
+        <div className="data-group-grid">{dataGroups.map(([title, tables]) => <article key={title}><h3>{title}</h3><code>{tables}</code></article>)}</div>
+      </section>
+
+      <section className="project-section" id="failures">
+        <header className="project-section-heading"><span>07 / FAILURE CASES</span><div><h2>失败路径也必须<br />可以解释和复现。</h2><p>比“高可靠”更重要的是展示系统如何发现非法输出、保留原始提交，并在重复执行时避免二次推进。</p></div></header>
+        <div className="failure-case-list">{failureCases.map(([title, solution, evidence], index) => <article key={title}><span>CASE 0{index + 1}</span><h3>{title}</h3><p>{solution}</p><code>{evidence}</code></article>)}</div>
+        <div className="test-evidence"><div><strong>213</strong><span>源码定义测试用例</span><small>按当前 *.test.ts 中 it/test 定义统计</small></div><div><strong>101</strong><span>本次 npm test 通过</span><small>2026-07-21 实际命令结果</small></div><div><strong>6</strong><span>真实 API 契约测试跳过</span><small>DeepSeek contract 为 opt-in，避免自动消耗额度</small></div><p>定义数量与本次执行数量分开披露；当前默认测试命令未把两个大型 Store / AppService 套件计入最终摘要，因此不写成“213 项全部通过”。</p></div>
+      </section>
+
       <section className="project-section tech-stack-section">
-        <header className="project-section-heading"><span>04 / STACK</span><div><h2>技术栈与产品边界</h2><p>桌面端拥有完整本地能力；当前网站只负责展示，不接入真实模型和用户数据。</p></div></header>
+        <header className="project-section-heading"><span>08 / STACK & STATUS</span><div><h2>技术栈与真实完成边界</h2><p>桌面端拥有完整本地能力；当前网站只负责展示，不接入真实模型和用户数据。</p></div></header>
         <div className="project-tech-grid">{techStack.map(([category, ...items]) => <article key={category}><span>{category}</span>{items.map((item) => <strong key={item}>{item}</strong>)}</article>)}</div>
+        <div className="delivery-status"><article><span>已实现并验证</span><p>SQLite 持久化、目标到评价主流程、13 类上下文白名单、结构化输出校验、调用日志、状态恢复与核心测试。</p></article><article><span>正在完善</span><p>UI 一致性、默认测试命令覆盖范围、完整交互录屏、错误可观测性展示和发布体验。</p></article><article><span>长期规划</span><p>更丰富的工具能力、个性化长期画像与知识检索；这些能力不会被描述成当前已交付功能。</p></article></div>
       </section>
 
       <section className="tour-footnote">
