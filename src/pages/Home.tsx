@@ -49,12 +49,12 @@ function Home() {
       <section className="portfolio-hero">
         <div className="hero-kicker">
           <span className="status-dot" />
-          陈东升 · 2026 应届 · 计算机科学与技术
+          AI APPLICATIONS · ENGINEERING PRACTICE
         </div>
         <div className="hero-grid">
-          <h1>AI 应用<br /><em>开发工程师。</em></h1>
+          <h1>可运行的产品，<br /><em>可核验的工程。</em></h1>
           <div className="hero-intro">
-            <p>独立开发本地优先的长周期学习 Agent，重点实践结构化 LLM Workflow、持久状态、异常恢复与可验证执行闭环。</p>
+            <p>这里集中展示三个已经实现的项目，以及它们背后的运行数据、状态设计、异常恢复和测试证据。</p>
             <div className="hero-actions">
               <Link to="/demo" className="button button-primary">查看核心项目 <span>↗</span></Link>
               <a href="mailto:cdongs@outlook.com" className="text-link">联系我 <span>↗</span></a>

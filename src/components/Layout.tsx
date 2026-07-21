@@ -19,8 +19,8 @@ function Layout() {
           <Link to="/" className="nav-brand">
             <span className="brand-mark">P.</span>
             <span className="brand-copy">
-              <strong>陈东升</strong>
-              <small>AI 应用开发工程师</small>
+              <strong>个人作品集</strong>
+              <small>项目与工程证据</small>
             </span>
           </Link>
           <div className="nav-links">
