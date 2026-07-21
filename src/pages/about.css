@@ -10,17 +10,17 @@
 .about-profile > div { max-width: 900px; }
 .about-profile p { margin-bottom: 22px; color: var(--color-text-secondary); font-size: 1rem; line-height: 1.8; }
 .about-profile .about-lead { color: var(--color-text); font: 400 clamp(1.65rem, 3.2vw, 2.7rem)/1.3 var(--font-display); letter-spacing: -.025em; }
-.about-experience, .about-skills { display: flex; flex-direction: column; }
+.about-projects, .about-skills { display: flex; flex-direction: column; }
 .about-section-title { padding: 22px 0 38px; display: grid; grid-template-columns: 1fr 3fr; border-top: 1px solid var(--color-text); }
 .about-section-title h2 { font: 400 clamp(2rem, 4vw, 3.5rem) var(--font-display); }
-.about-experience > article { padding: 34px 0; display: grid; grid-template-columns: 1fr 3fr; gap: 32px; border-top: 1px solid var(--color-border); }
-.experience-meta { display: flex; flex-direction: column; gap: 8px; color: var(--color-text-muted); font: .65rem var(--font-mono); }
-.experience-meta strong { color: var(--color-accent); }
-.about-experience article > div:last-child { max-width: 850px; }
-.about-experience h3 { font: 400 1.7rem var(--font-display); }
-.about-experience p { margin-top: 12px; color: var(--color-text-secondary); }
-.about-experience ul { margin: 18px 0 20px; padding-left: 18px; color: var(--color-text-secondary); font-size: .86rem; line-height: 1.85; }
-.about-experience article a { padding-bottom: 4px; border-bottom: 1px solid var(--color-text); font-size: .78rem; font-weight: 700; }
+.about-project-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--color-border); border: 1px solid var(--color-border); }
+.about-project-grid > a { min-height: 320px; padding: 26px; display: flex; flex-direction: column; background: var(--color-bg-secondary); }
+.about-project-grid > a:hover { color: var(--color-text); background: #fff; }
+.about-project-grid > a > span { color: var(--color-accent); font: .68rem var(--font-mono); }
+.about-project-grid small { margin-top: auto; color: var(--color-text-muted); font: .58rem var(--font-mono); }
+.about-project-grid h3 { margin-top: 10px; font: 400 1.55rem var(--font-display); }
+.about-project-grid p { margin-top: 12px; color: var(--color-text-secondary); font-size: .8rem; line-height: 1.7; }
+.about-project-grid b { margin-top: 24px; font-size: .72rem; }
 .skills-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--color-border); border: 1px solid var(--color-border); }
 .skills-grid article { min-height: 240px; padding: 26px; display: flex; flex-direction: column; background: var(--color-bg-secondary); }
 .skills-grid article > span { color: var(--color-accent); font: .68rem var(--font-mono); }
@@ -31,4 +31,5 @@
 .about-cta { padding: 46px 0; display: flex; justify-content: space-between; align-items: center; gap: 30px; border-top: 1px solid var(--color-text); }
 .about-cta > p { max-width: 720px; font: 400 clamp(1.4rem, 2.7vw, 2.2rem) var(--font-display); }
 .about-cta > div { display: flex; align-items: center; gap: 20px; flex: 0 0 auto; }.about-github { font-size: .78rem; font-weight: 700; }
-@media (max-width: 760px) { .about-page { gap: 66px; }.about-hero { padding-top: 46px; }.about-hero-grid, .about-profile, .about-section-title, .about-experience > article, .about-boundary { grid-template-columns: 1fr; }.about-hero-grid { gap: 40px; }.about-profile, .about-section-title, .about-experience > article { gap: 22px; }.skills-grid { grid-template-columns: 1fr; }.about-boundary { padding: 34px 26px; }.about-cta { align-items: flex-start; flex-direction: column; }.about-cta > div { flex-wrap: wrap; } }
+@media (max-width: 900px) { .about-project-grid { grid-template-columns: 1fr; }.about-project-grid > a { min-height: 240px; } }
+@media (max-width: 760px) { .about-page { gap: 66px; }.about-hero { padding-top: 46px; }.about-hero-grid, .about-profile, .about-section-title, .about-boundary { grid-template-columns: 1fr; }.about-hero-grid { gap: 40px; }.about-profile, .about-section-title { gap: 22px; }.skills-grid { grid-template-columns: 1fr; }.about-boundary { padding: 34px 26px; }.about-cta { align-items: flex-start; flex-direction: column; }.about-cta > div { flex-wrap: wrap; } }
