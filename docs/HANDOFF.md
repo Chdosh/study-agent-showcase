@@ -6,6 +6,12 @@
 
 ## 本轮完成
 
+- 将 Study Agent 从“紧凑作品集”进一步转换为务实的软件项目案例页，首屏改为项目概况、交付范围、核心技术和仓库信息面板
+- 新增四阶段产品工作流图与八个核心状态节点，明确 Goal、Roadmap、Session、Submission、Evaluation 到 Rolling Plan 的推进关系
+- 将 AI 处理链改为带箭头的六步受控事务图：Context Build → Proposal → Normalize → Zod Validation → Confirm / Reject → Transaction Commit
+- 重绘运行架构图，明确 React Renderer、preload / IPC、Application Service、SQLite 数据分支与 LLM 分支的边界及代码模块
+- 新增关键技术决策表，按“工程问题 / 技术选择 / 代码位置 / 验证方式”说明 Zod、SQLite、事务恢复、Human-in-the-loop 与 Token 预算
+- 保留真实数据库快照、六步界面演示、核心表组、失败案例、测试数字和交付边界；移动端将关键技术表自动改为逐项卡片
 - 恢复个人网站定位：浏览器标题与 Open Graph 标题改回“冬生”，导航品牌改为“冬生 / 个人网站”，首页导航名改为“首页”
 - 首页首屏改为个人项目记录语气，并在项目与运行数据之前恢复四项工作方式：完整落地、约束 AI、本地状态、真实迭代
 - 删除首页重复且过于产品宣传化的能力区块，保留三个项目入口、真实数据与简短个人介绍
