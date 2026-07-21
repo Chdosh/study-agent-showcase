@@ -1,4 +1,4 @@
-.portfolio-home { display: flex; flex-direction: column; gap: 118px; }
+.portfolio-home { display: flex; flex-direction: column; gap: 88px; }
 .portfolio-hero { padding: 92px 0 30px; }
 .hero-kicker { display: flex; align-items: center; gap: 10px; margin-bottom: 52px; color: var(--color-text-secondary); font: 600 .7rem var(--font-mono); letter-spacing: .11em; text-transform: uppercase; }
 .status-dot { width: 8px; height: 8px; display: inline-block; flex: 0 0 auto; border-radius: 50%; background: var(--color-success); box-shadow: 0 0 0 5px rgba(22,125,115,.1); }
@@ -8,7 +8,7 @@
 .hero-intro { padding-bottom: 10px; }
 .hero-intro > p { color: var(--color-text-secondary); font-size: clamp(1rem, 1.5vw, 1.17rem); line-height: 1.75; }
 .hero-actions { margin-top: 30px; display: flex; align-items: center; gap: 26px; flex-wrap: wrap; }
-.work-section, .capability-section { display: flex; flex-direction: column; gap: 44px; }
+.work-section, .capability-section { display: flex; flex-direction: column; gap: 34px; }
 .home-evidence { border-top: 1px solid var(--color-text); }
 .evidence-heading { padding: 20px 0 28px; display: flex; justify-content: space-between; gap: 24px; }
 .evidence-heading span { color: var(--color-accent); font: 600 .68rem var(--font-mono); letter-spacing: .12em; }
@@ -20,7 +20,9 @@
 .evidence-grid small { margin-top: 6px; color: var(--color-text-muted); font: .58rem/1.5 var(--font-mono); }
 .section-heading { display: grid; grid-template-columns: 1fr 3fr; padding-top: 22px; border-top: 1px solid var(--color-text); }
 .section-heading > span, .future-project-meta > span { color: var(--color-accent); font: 600 .68rem var(--font-mono); letter-spacing: .12em; }
-.section-heading h2 { font: 400 clamp(2rem, 4vw, 3.6rem)/1.04 var(--font-display); letter-spacing: -.04em; }
+.section-heading > div { display: grid; grid-template-columns: 1fr 1fr; gap: 36px; align-items: end; }
+.section-heading h2 { font: 650 clamp(1.55rem, 2.6vw, 2.35rem)/1.12 var(--font-sans); letter-spacing: -.035em; }
+.section-heading > div > p { max-width: 520px; color: var(--color-text-secondary); font-size: .84rem; }
 .featured-project { min-height: 590px; display: grid; grid-template-columns: 5fr 7fr; background: var(--color-text); color: #fff; overflow: hidden; }
 .project-copy { padding: clamp(32px, 5vw, 64px); display: flex; flex-direction: column; align-items: flex-start; }
 .project-meta { width: 100%; display: flex; justify-content: space-between; gap: 16px; color: #a9aeb6; font: .6rem var(--font-mono); letter-spacing: .08em; text-transform: uppercase; }
@@ -65,9 +67,9 @@
 .future-project-arrow { position: absolute; right: 28px; bottom: 28px; color: var(--color-text-muted); font-size: 1.1rem; }
 .future-project:hover .future-project-arrow { color: var(--color-accent); transform: translate(2px, -2px); }
 .capability-list { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; }
-.capability-list article { min-height: 220px; padding: 22px 0; display: flex; flex-direction: column; border-top: 1px solid var(--color-border); }
+.capability-list article { min-height: 176px; padding: 20px 0; display: flex; flex-direction: column; border-top: 1px solid var(--color-border); }
 .capability-list article > span { color: var(--color-accent); font: .68rem var(--font-mono); }
-.capability-list h3 { margin-top: auto; font: 400 1.35rem var(--font-display); }
+.capability-list h3 { margin-top: auto; font: 650 1rem/1.35 var(--font-sans); letter-spacing: -.015em; }
 .capability-list p { margin-top: 12px; color: var(--color-text-secondary); font-size: .85rem; }
 .about-strip { display: grid; grid-template-columns: 2fr 6fr 2fr; gap: 44px; align-items: start; padding: 48px 0; border-top: 1px solid var(--color-text); border-bottom: 1px solid var(--color-border); }
 .about-strip > p { font: 400 clamp(1.45rem, 2.7vw, 2.2rem)/1.35 var(--font-display); letter-spacing: -.025em; }
@@ -87,6 +89,7 @@
   .future-project-grid { grid-template-columns: 1fr; }
   .about-strip { grid-template-columns: 1fr 3fr; }
   .about-strip .text-link { grid-column: 2; justify-self: start; }
+  .section-heading > div { grid-template-columns: 1fr; gap: 12px; }
 }
 @media (max-width: 620px) {
   .portfolio-home { gap: 68px; }

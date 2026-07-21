@@ -3,7 +3,7 @@
 .nav { max-width: var(--max-width); min-height: var(--header-height); margin: 0 auto; padding: 0 24px; display: flex; align-items: center; gap: 40px; }
 .nav-brand { display: inline-flex; align-items: center; gap: 12px; color: var(--color-text); white-space: nowrap; }
 .nav-brand:hover { color: var(--color-text); }
-.brand-mark { width: 34px; height: 34px; display: grid; place-items: center; color: #fff; background: var(--color-text); border-radius: 50%; font: italic 700 1rem var(--font-display); }
+.brand-mark { width: 34px; height: 34px; display: grid; place-items: center; color: #fff; background: var(--color-text); border-radius: 50%; font: 700 .86rem var(--font-sans); }
 .brand-copy { display: flex; flex-direction: column; line-height: 1.15; }
 .brand-copy strong { font-size: .88rem; letter-spacing: -.01em; }
 .brand-copy small { margin-top: 4px; color: var(--color-text-muted); font: .58rem var(--font-mono); letter-spacing: .08em; text-transform: uppercase; }

@@ -4,23 +4,23 @@ import './home.css'
 const capabilities = [
   {
     index: '01',
-    title: 'Guarded LLM Workflow',
-    desc: 'JSON Mode、Zod 校验、受约束修复与人工确认，让模型建议不能越权改状态。',
+    title: '从想法到可运行版本',
+    desc: '自己梳理需求、设计交互、接入模型和数据层，再用真实流程验证结果。',
   },
   {
     index: '02',
-    title: 'Durable State',
-    desc: '用 SQLite 保存目标、计划、Session、提交和评价，重启后从正式状态恢复。',
+    title: '把 AI 放进明确边界',
+    desc: '不把可靠性寄托在提示词上，用 Schema、确认流程和错误处理约束模型输出。',
   },
   {
     index: '03',
-    title: 'Recoverable Workflow',
-    desc: '把失败、重试、幂等和事务纳入主流程，而不是只处理成功路径。',
+    title: '重视本地状态与数据',
+    desc: '使用 SQLite 保存长期状态，让软件关闭后可以继续，也让过程可以回看和核验。',
   },
   {
     index: '04',
-    title: 'AI 辅助工程实践',
-    desc: '独立完成需求拆解、交互、模型接入、数据持久化、测试与持续迭代。',
+    title: '根据真实使用继续改',
+    desc: '关注运行记录、失败路径和自动化测试，而不是只完成一套看起来正确的界面。',
   },
 ]
 
@@ -49,17 +49,33 @@ function Home() {
       <section className="portfolio-hero">
         <div className="hero-kicker">
           <span className="status-dot" />
-          AI APPLICATIONS · ENGINEERING PRACTICE
+          冬生 · 个人网站
         </div>
         <div className="hero-grid">
-          <h1>可运行的产品，<br /><em>可核验的工程。</em></h1>
+          <h1>把想法做成，<br /><em>真正能用的工具。</em></h1>
           <div className="hero-intro">
-            <p>这里集中展示三个已经实现的项目，以及它们背后的运行数据、状态设计、异常恢复和测试证据。</p>
+            <p>这里记录我正在完成的 AI 应用、本地桌面软件和自动化工作流，也保留它们从想法到运行过程中遇到的问题与实现细节。</p>
             <div className="hero-actions">
-              <Link to="/demo" className="button button-primary">查看核心项目 <span>↗</span></Link>
-              <a href="mailto:cdongs@outlook.com" className="text-link">联系我 <span>↗</span></a>
+              <a href="#selected-work" className="button button-primary">查看项目 <span>↓</span></a>
+              <Link to="/about" className="text-link">关于我 <span>↗</span></Link>
             </div>
           </div>
+        </div>
+      </section>
+
+      <section className="capability-section home-strengths">
+        <div className="section-heading">
+          <span>01 / HOW I WORK</span>
+          <div><h2>我处理问题的方式</h2><p>项目类型不同，但我通常会沿着同一条路径推进：先让流程成立，再补状态、异常与验证。</p></div>
+        </div>
+        <div className="capability-list">
+          {capabilities.map((cap) => (
+            <article key={cap.title}>
+              <span>{cap.index}</span>
+              <h3>{cap.title}</h3>
+              <p>{cap.desc}</p>
+            </article>
+          ))}
         </div>
       </section>
 
@@ -75,7 +91,7 @@ function Home() {
 
       <section className="work-section" id="selected-work">
         <div className="section-heading">
-          <span>01 / SELECTED WORK</span>
+          <span>02 / SELECTED WORK</span>
           <h2>重点项目</h2>
         </div>
         <article className="featured-project">
@@ -130,25 +146,9 @@ function Home() {
         </div>
       </section>
 
-      <section className="capability-section">
-        <div className="section-heading">
-          <span>02 / CAPABILITIES</span>
-          <h2>把模型能力纳入<br />可验证的应用流程</h2>
-        </div>
-        <div className="capability-list">
-          {capabilities.map((cap) => (
-            <article key={cap.title}>
-              <span>{cap.index}</span>
-              <h3>{cap.title}</h3>
-              <p>{cap.desc}</p>
-            </article>
-          ))}
-        </div>
-      </section>
-
       <section className="about-strip">
         <span className="about-label">03 / ABOUT</span>
-        <p>南京理工大学紫金学院计算机科学与技术专业。能够独立完成需求拆解、交互实现、模型接入、本地数据持久化和核心流程测试。</p>
+        <p>我喜欢处理那些还不够清楚的问题：先梳理边界和数据流，再用简单直接的界面把它做成可以运行的东西。</p>
         <Link to="/about" className="text-link">更多关于我 <span>↗</span></Link>
       </section>
 

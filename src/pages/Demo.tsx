@@ -249,7 +249,7 @@ function Demo() {
       </header>
 
       <section className="project-section project-evidence-section" id="evidence">
-        <header className="project-section-heading"><span>01 / VERIFIED SNAPSHOT</span><div><h2>软件真实运行过，<br />数字有查询口径。</h2><p>以下为 2026-07-21 对本机开发库进行只读聚合查询的结果。只展示数量，不复制数据库、日志或学习内容。</p></div></header>
+        <header className="project-section-heading"><span>01 / VERIFIED SNAPSHOT</span><div><h2>软件运行状态与工程证据</h2><p>以下为 2026-07-21 对本机开发库进行只读聚合查询的结果。只展示数量，不复制数据库、日志或学习内容。</p></div></header>
         <div className="project-metric-grid">
           <article><strong>60</strong><span>Session</span><small>study_sessions 全部记录；54 completed / 5 skipped / 1 active</small></article>
           <article><strong>136</strong><span>完成 Action</span><small>daily_guide_actions 中 status = done；另有 67 skipped</small></article>
@@ -260,7 +260,7 @@ function Demo() {
       </section>
 
       <section className="project-section product-flow-section" id="product-flow">
-        <header className="project-section-heading"><span>02 / PRODUCT FLOW</span><div><h2>一次完整学习，<br />在软件里如何发生。</h2><p>界面根据桌面版真实信息架构和业务状态重建。无需填写内容，点击步骤即可浏览；这是静态重建，不是在线 SaaS。</p></div></header>
+        <header className="project-section-heading"><span>02 / PRODUCT FLOW</span><div><h2>一次完整学习的软件流程</h2><p>界面根据桌面版真实信息架构和业务状态重建。无需填写内容，点击步骤即可浏览；这是静态重建，不是在线 SaaS。</p></div></header>
         <nav className="tour-step-nav" aria-label="产品流程步骤">
           {tourSteps.map((item, index) => (
             <button type="button" className={index === activeIndex ? 'active' : ''} key={item.view} onClick={() => showStep(index)}>
@@ -291,7 +291,7 @@ function Demo() {
       </section>
 
       <section className="project-section" id="ai-transaction">
-        <header className="project-section-heading"><span>03 / GUARDED AI TRANSACTION</span><div><h2>模型只能提案，<br />程序负责验证与提交。</h2><p>13 类 AI 操作拥有不同的字段白名单；上下文构建、输出修复、用户确认和事务写入形成一条受保护的调用链。</p></div></header>
+        <header className="project-section-heading"><span>03 / GUARDED AI TRANSACTION</span><div><h2>模型提案，程序验证与提交</h2><p>13 类 AI 操作拥有不同的字段白名单；上下文构建、输出修复、用户确认和事务写入形成一条受保护的调用链。</p></div></header>
         <div className="ai-transaction-flow">{aiTransactionFlow.map(([title, description, module], index) => <article key={title}><span>0{index + 1}</span><h3>{title}</h3><p>{description}</p><code>{module}</code></article>)}</div>
       </section>
 
@@ -319,12 +319,12 @@ function Demo() {
       </section>
 
       <section className="project-section" id="persistence">
-        <header className="project-section-heading"><span>06 / PERSISTENCE</span><div><h2>39 张表不是卖点，<br />可追溯的业务事实才是。</h2><p>数据库同时保留原始事实、派生评价、计划版本和恢复锁。下面只列核心表组，完整定义位于 src/main/db/schema.ts。</p></div></header>
+        <header className="project-section-heading"><span>06 / PERSISTENCE</span><div><h2>可追溯的业务事实</h2><p>数据库同时保留原始事实、派生评价、计划版本和恢复锁。下面只列核心表组，完整定义位于 src/main/db/schema.ts。</p></div></header>
         <div className="data-group-grid">{dataGroups.map(([title, tables]) => <article key={title}><h3>{title}</h3><code>{tables}</code></article>)}</div>
       </section>
 
       <section className="project-section" id="failures">
-        <header className="project-section-heading"><span>07 / FAILURE CASES</span><div><h2>失败路径也必须<br />可以解释和复现。</h2><p>比“高可靠”更重要的是展示系统如何发现非法输出、保留原始提交，并在重复执行时避免二次推进。</p></div></header>
+        <header className="project-section-heading"><span>07 / FAILURE CASES</span><div><h2>可以解释和复现的失败路径</h2><p>比“高可靠”更重要的是展示系统如何发现非法输出、保留原始提交，并在重复执行时避免二次推进。</p></div></header>
         <div className="failure-case-list">{failureCases.map(([title, solution, evidence], index) => <article key={title}><span>CASE 0{index + 1}</span><h3>{title}</h3><p>{solution}</p><code>{evidence}</code></article>)}</div>
         <div className="test-evidence"><div><strong>213</strong><span>源码定义测试用例</span><small>按当前 *.test.ts 中 it/test 定义统计</small></div><div><strong>101</strong><span>本次 npm test 通过</span><small>2026-07-21 实际命令结果</small></div><div><strong>6</strong><span>真实 API 契约测试跳过</span><small>DeepSeek contract 为 opt-in，避免自动消耗额度</small></div><p>定义数量与本次执行数量分开披露；当前默认测试命令未把两个大型 Store / AppService 套件计入最终摘要，因此不写成“213 项全部通过”。</p></div>
       </section>
